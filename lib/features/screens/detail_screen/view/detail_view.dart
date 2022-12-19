@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:pookeedex/core/constants/padding_const.dart';
+import 'package:pookeedex/core/enum/hive.dart';
 import 'package:pookeedex/features/screens/detail_screen/view_model/detail_view_model.dart';
 import 'package:pookeedex/features/screens/evolutions_screen/view/evolutions_view.dart';
 import 'package:pookeedex/features/screens/pokemon_moves_screen/view/pokemon_moves_view.dart';
@@ -35,7 +36,11 @@ class _DetailViewState extends DetailViewModel {
                 childPaddingFromTop: context.dynamicHeight(0.1),
                 child: Column(
                   children: [
-                    PookeImage(pookeeImage: pookee.image),
+                    SizedBox(
+                      height: context.dynamicHeight(0.2),
+                      child: PookeeCachedImage(
+                          pookee: pookee, type: HiveEnum.initial_pokemon),
+                    ),
                     Padding(
                       padding: const PaddingConst.largeVertical(),
                       child: _PookeeNList(pookee: pookee),
@@ -112,7 +117,8 @@ class _DetailViewState extends DetailViewModel {
         ),
       ),
       actions: [
-        FavoriteButton<Pokemon>(data: pookee),
+        FavoriteButton<Pokemon>(
+            data: pookee, hiveEnum: HiveEnum.favorite_pokemon),
       ],
       centerTitle: true,
     );

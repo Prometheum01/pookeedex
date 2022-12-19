@@ -24,7 +24,13 @@ class _MainViewState extends MainViewModel {
           color: Colors.white.withOpacity(0.8),
         ),
         isLoading
-            ? const Center(child: CustomLoading())
+            ? Center(
+                child: Column(
+                children: const [
+                  CustomLoading(),
+                  Text("Please wait first loading take some time.")
+                ],
+              ))
             : Scaffold(
                 appBar: AppBar(
                   backgroundColor: Colors.transparent,

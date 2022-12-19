@@ -18,11 +18,15 @@ class Item extends Equatable {
   @HiveField(3)
   final String description;
 
+  @HiveField(4)
+  final int id;
+
   const Item({
     required this.name,
     required this.cost,
     required this.image,
     required this.description,
+    required this.id,
   });
 
   static Item fromJson(Map<String, dynamic> json) {
@@ -34,12 +38,13 @@ class Item extends Equatable {
       description: (json["effect_entries"] as List).isNotEmpty
           ? effectList.first["effect"].toString()
           : "Null",
+      id: int.parse(json["id"].toString()),
     );
   }
 
-  static Item get emptyItem =>
-      const Item(name: "Null", cost: "0", image: "", description: "Null");
+  static Item get emptyItem => const Item(
+      name: "Null", cost: "0", image: "", description: "Null", id: -1);
 
   @override
-  List<Object?> props() => [name, cost, image, description];
+  List<Object?> props() => [name, cost, image, description, id];
 }

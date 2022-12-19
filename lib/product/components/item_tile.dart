@@ -1,15 +1,22 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:pookeedex/core/constants/color_const.dart';
+import 'package:pookeedex/product/components/cached_image.dart';
 
+import '../../core/enum/hive.dart';
 import '../../core/services/navigator/navigator_service.dart';
 import '../model/item.dart';
 import 'widgets.dart';
 
 class ItemTile extends StatelessWidget {
-  const ItemTile({super.key, required this.item});
+  const ItemTile(
+      {super.key, required this.item, this.type = HiveEnum.initial_items});
 
   final Item item;
+
+  final HiveEnum type;
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +28,10 @@ class ItemTile extends StatelessWidget {
       child: Ink(
         color: Colors.white,
         child: ListTile(
-          leading: Image.network(
-            item.image,
+          leading: SizedBox(
             height: context.dynamicHeight(0.05),
             width: context.dynamicHeight(0.05),
-            fit: BoxFit.cover,
+            child: ItemCachedImage(item: item, type: type),
           ),
           title: Text(
             item.name.toTitleCase(),

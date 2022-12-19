@@ -5,8 +5,10 @@ import 'package:pookeedex/core/constants/color_const.dart';
 import 'package:pookeedex/core/services/cache/hive_manager.dart';
 import 'package:pookeedex/core/services/navigator/navigator_service.dart';
 import 'package:pookeedex/core/services/provider/main_screen_provider.dart';
-import 'package:pookeedex/core/services/provider/pookee_provider.dart';
 import 'package:provider/provider.dart';
+
+import 'core/services/provider/cache_provider.dart';
+import 'core/services/provider/pookee_provider.dart';
 
 Future<void> main() async {
   await HiveManager().initDB();
@@ -19,7 +21,10 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => MainScreenProvider(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CacheProvider(),
+        ),
       ],
       child: const MyApp(),
     ),

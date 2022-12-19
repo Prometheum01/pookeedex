@@ -22,6 +22,7 @@ dependencies:
   kartal: ^2.3.2
   lottie: ^2.0.0
   flutter_svg: ^1.1.6
+  permission_handler: ^10.2.0
 
   #State Management
   provider: ^6.0.4
@@ -29,6 +30,7 @@ dependencies:
   #Network
   internet_connection_checker: ^1.0.0+1
   dio: ^4.0.6
+  image_downloader: ^0.31.0
 
   #Cache
   hive: ^2.2.3

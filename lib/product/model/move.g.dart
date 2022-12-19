@@ -23,13 +23,14 @@ class MoveAdapter extends TypeAdapter<Move> {
       accuracy: fields[3] as String,
       basePower: fields[4] as String,
       pp: fields[5] as String,
+      id: fields[6] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Move obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -41,7 +42,9 @@ class MoveAdapter extends TypeAdapter<Move> {
       ..writeByte(4)
       ..write(obj.basePower)
       ..writeByte(5)
-      ..write(obj.pp);
+      ..write(obj.pp)
+      ..writeByte(6)
+      ..write(obj.id);
   }
 
   @override

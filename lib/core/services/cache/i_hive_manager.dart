@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_shadowing_type_parameters
 
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pookeedex/core/enum/hive.dart';
 
 import '../../../product/model/ability.dart';
 import '../../../product/model/breeding.dart';
@@ -14,7 +15,6 @@ import '../../../product/model/nature_color.dart';
 import '../../../product/model/pokemon.dart';
 import '../../../product/model/pokemon_type.dart';
 import '../../../product/model/stat.dart';
-import '../../constants/hive_const.dart';
 
 abstract class IHaveManager<T> {
   Future<void> initDB() async {
@@ -38,12 +38,20 @@ abstract class IHaveManager<T> {
     Hive.registerAdapter(PokemonAdapter());
     Hive.registerAdapter(StatAdapter());
 
-    await Hive.openBox<Pokemon>(HiveConst.favoritePokemon);
-    await Hive.openBox<Move>(HiveConst.favoriteMoves);
-    await Hive.openBox<Item>(HiveConst.favoriteItems);
+    await Hive.openBox<Pokemon>(HiveEnum.favorite_pokemon.name);
+    await Hive.openBox<Move>(HiveEnum.favorite_moves.name);
+    await Hive.openBox<Item>(HiveEnum.favorite_items.name);
+
+    await Hive.openBox<Pokemon>(HiveEnum.initial_pokemon.name);
+    await Hive.openBox<Move>(HiveEnum.initial_moves.name);
+    await Hive.openBox<Item>(HiveEnum.initial_items.name);
   }
 
-  addDataToBox<T>({required T data}) {}
+  addDataToBox<T>({required T data, required HiveEnum hiveEnum}) {}
 
-  readDataFromBox<T>() {}
+  readDataFromBox<T>(HiveEnum hiveEnum) {}
+
+  deleteDataFromBox<T>({required int index, required HiveEnum hiveEnum}) {}
+
+  checkDataInBox<T>({required T data, required HiveEnum hiveEnum}) {}
 }

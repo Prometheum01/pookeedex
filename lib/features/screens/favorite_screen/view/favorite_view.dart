@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pookeedex/core/enum/hive.dart';
 import 'package:pookeedex/features/screens/favorite_screen/view_model/favorite_view_model.dart';
 import 'package:pookeedex/product/model/item.dart';
 import 'package:pookeedex/product/model/move.dart';
@@ -21,6 +22,7 @@ class _FavoriteViewState extends FavoriteViewModel {
           itemCount: pookeeBox.length,
           itemBuilder: (context, index) => PookeeTile(
             pokemon: pookeeBox.get(index) ?? Pokemon.emptyPokemon,
+            type: HiveEnum.favorite_pokemon,
           ),
         ),
         ListView.builder(
@@ -30,8 +32,10 @@ class _FavoriteViewState extends FavoriteViewModel {
         ),
         ListView.builder(
           itemCount: itemBox.length,
-          itemBuilder: (context, index) =>
-              ItemTile(item: itemBox.get(index) ?? Item.emptyItem),
+          itemBuilder: (context, index) => ItemTile(
+            item: itemBox.get(index) ?? Item.emptyItem,
+            type: HiveEnum.favorite_items,
+          ),
         ),
       ],
     );

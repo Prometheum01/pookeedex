@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:pookeedex/core/constants/color_const.dart';
 import 'package:pookeedex/core/constants/padding_const.dart';
+import 'package:pookeedex/core/enum/hive.dart';
 import 'package:pookeedex/product/components/widgets.dart';
 import 'package:pookeedex/product/model/item.dart';
 
@@ -25,7 +26,8 @@ class ItemDetailView extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
             actions: [
-              FavoriteButton<Item>(data: item),
+              FavoriteButton<Item>(
+                  data: item, hiveEnum: HiveEnum.favorite_items),
             ],
           ),
           body: ListView(
@@ -37,15 +39,15 @@ class ItemDetailView extends StatelessWidget {
                 childPaddingFromTop: context.dynamicHeight(0.05),
                 child: Column(
                   children: [
-                    Image.network(
-                      item.image,
+                    SizedBox(
                       height: context.dynamicHeight(
                         0.2,
                       ),
                       width: context.dynamicHeight(
                         0.2,
                       ),
-                      fit: BoxFit.cover,
+                      child: ItemCachedImage(
+                          item: item, type: HiveEnum.favorite_items),
                     ),
                     Padding(
                       padding: const PaddingConst.largeVertical(),

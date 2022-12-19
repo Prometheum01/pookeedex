@@ -21,13 +21,14 @@ class ItemAdapter extends TypeAdapter<Item> {
       cost: fields[1] as String,
       image: fields[2] as String,
       description: fields[3] as String,
+      id: fields[4] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Item obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class ItemAdapter extends TypeAdapter<Item> {
       ..writeByte(2)
       ..write(obj.image)
       ..writeByte(3)
-      ..write(obj.description);
+      ..write(obj.description)
+      ..writeByte(4)
+      ..write(obj.id);
   }
 
   @override

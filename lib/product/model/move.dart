@@ -19,6 +19,9 @@ class Move extends Equatable {
   @HiveField(5)
   final String pp;
 
+  @HiveField(6)
+  final int id;
+
   const Move({
     required this.name,
     required this.type,
@@ -26,17 +29,20 @@ class Move extends Equatable {
     required this.accuracy,
     required this.basePower,
     required this.pp,
+    required this.id,
   });
 
   String get normalName => name.replaceAll('-', ' ');
 
   static Move get emptyMove => Move(
-      name: "Null",
-      type: PokemonType.emptyType,
-      effectEntries: "Null",
-      accuracy: "Null",
-      basePower: "Null",
-      pp: "Null");
+        name: "Null",
+        type: PokemonType.emptyType,
+        effectEntries: "Null",
+        accuracy: "Null",
+        basePower: "Null",
+        pp: "Null",
+        id: -1,
+      );
 
   static fromJson(Map<String, dynamic> json) {
     List effectList = json["effect_entries"];
@@ -49,9 +55,11 @@ class Move extends Equatable {
       accuracy: json["accuracy"].toString(),
       basePower: json["power"].toString(),
       pp: json["pp"].toString(),
+      id: int.parse(json["id"].toString()),
     );
   }
 
   @override
-  List<Object?> props() => [name, type, effectEntries, accuracy, basePower, pp];
+  List<Object?> props() =>
+      [name, type, effectEntries, accuracy, basePower, pp, id];
 }

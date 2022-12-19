@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pookeedex/features/screens/no_internet_screen/view/no_internet_view.dart';
 
 import '../../core/enum/list_enum.dart';
 import 'widgets.dart';
@@ -36,35 +37,37 @@ class _ListTemplateState extends State<ListTemplate> {
           ? const Center(
               child: CustomLoading(),
             )
-          : ListView.separated(
-              controller: widget.scrollController,
-              itemCount: widget.isPaginateLoading
-                  ? widget.list.length + 1
-                  : widget.list.length,
-              separatorBuilder: (context, index) {
-                return Ink(
-                  color: Colors.white,
-                  child: const CustomDivider(),
-                );
-              },
-              itemBuilder: (context, index) {
-                if (index < widget.list.length) {
-                  switch (widget.type) {
-                    case ListType.pokemon:
-                      return PookeeTile(pokemon: widget.list[index]);
-                    case ListType.moves:
-                      return MovesTile(move: widget.list[index]);
-                    case ListType.items:
-                      return ItemTile(item: widget.list[index]);
-                    case ListType.favorites:
-                      return const Text("Null");
-                    default:
-                      return const Text("Null");
-                  }
-                } else {
-                  return const Center(child: CustomLoading());
-                }
-              }),
+          : widget.list.isEmpty
+              ? const NoInternetView()
+              : ListView.separated(
+                  controller: widget.scrollController,
+                  itemCount: widget.isPaginateLoading
+                      ? widget.list.length + 1
+                      : widget.list.length,
+                  separatorBuilder: (context, index) {
+                    return Ink(
+                      color: Colors.white,
+                      child: const CustomDivider(),
+                    );
+                  },
+                  itemBuilder: (context, index) {
+                    if (index < widget.list.length) {
+                      switch (widget.type) {
+                        case ListType.pokemon:
+                          return PookeeTile(pokemon: widget.list[index]);
+                        case ListType.moves:
+                          return MovesTile(move: widget.list[index]);
+                        case ListType.items:
+                          return ItemTile(item: widget.list[index]);
+                        case ListType.favorites:
+                          return const Text("Null");
+                        default:
+                          return const Text("Null");
+                      }
+                    } else {
+                      return const Center(child: CustomLoading());
+                    }
+                  }),
     );
   }
 }
