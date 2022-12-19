@@ -1,0 +1,62 @@
+name: pookeedex
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.1 <3.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+
+  #Tools
+  kartal: ^2.3.2
+  lottie: ^2.0.0
+  flutter_svg: ^1.1.6
+
+  #State Management
+  provider: ^6.0.4
+
+  #Network
+  internet_connection_checker: ^1.0.0+1
+  dio: ^4.0.6
+
+  #Cache
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  equatable: ^2.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+  build_runner: ^2.3.3
+
+  #Cache
+  hive_generator: ^2.0.0
+
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/svg/
+    - assets/animation/
+
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf

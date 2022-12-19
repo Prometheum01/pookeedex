@@ -1,0 +1,45 @@
+import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
+import 'package:pookeedex/core/extensions/string_extension.dart';
+
+part 'item.g.dart';
+
+@HiveType(typeId: 5)
+class Item extends Equatable {
+  @HiveField(0)
+  final String name;
+
+  @HiveField(1)
+  final String cost;
+
+  @HiveField(2)
+  final String image;
+
+  @HiveField(3)
+  final String description;
+
+  const Item({
+    required this.name,
+    required this.cost,
+    required this.image,
+    required this.description,
+  });
+
+  static Item fromJson(Map<String, dynamic> json) {
+    List effectList = json["effect_entries"];
+    return Item(
+      name: json["name"].toString().fromJsonText,
+      cost: json["cost"].toString(),
+      image: json["sprites"]["default"].toString(),
+      description: (json["effect_entries"] as List).isNotEmpty
+          ? effectList.first["effect"].toString()
+          : "Null",
+    );
+  }
+
+  static Item get emptyItem =>
+      const Item(name: "Null", cost: "0", image: "", description: "Null");
+
+  @override
+  List<Object?> props() => [name, cost, image, description];
+}
