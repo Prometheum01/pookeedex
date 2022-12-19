@@ -10,39 +10,53 @@ import 'package:pookeedex/product/model/pokemon.dart';
 
 class HiveManager extends IHaveManager {
   @override
-  Future<void> addDataToBox<T>(
+  Future<bool> addDataToBox<T>(
       {required T data, required HiveEnum hiveEnum}) async {
-    if (await NetworkConnectivity().checkNetworkConnectivity() ==
-        InternetConnectionStatus.disconnected) {
-      print("There is no Internet");
-    } else {
-      Box<T> box = Hive.box(hiveEnum.name);
-      try {
-        // Saved with this method.
+    bool isHas = checkDataInBox(data: data, hiveEnum: hiveEnum);
 
-        if (HiveEnum.favorite_pokemon == hiveEnum ||
-            HiveEnum.initial_pokemon == hiveEnum) {
-          await ImageDownloader.downloadImage(
-            (data as Pokemon).image,
-            destination: AndroidDestinationType.custom(
-                directory: HiveEnum.pokemon_images.name)
-              ..inExternalFilesDir()
-              ..subDirectory("images/${data.id}.png"),
-          );
-        } else if (HiveEnum.favorite_items == hiveEnum ||
-            hiveEnum == HiveEnum.initial_items) {
-          await ImageDownloader.downloadImage(
-            (data as Item).image,
-            destination: AndroidDestinationType.custom(
-                directory: HiveEnum.item_images.name)
-              ..inExternalFilesDir()
-              ..subDirectory("images/${data.id}.png"),
-          );
+    if (isHas) {
+      deleteDataFromBox(data: data, hiveEnum: hiveEnum);
+      return true;
+    } else {
+      if (await NetworkConnectivity().checkNetworkConnectivity() ==
+          InternetConnectionStatus.disconnected) {
+        print("There is no Internet");
+        return false;
+      } else {
+        Box<T> box = Hive.box(hiveEnum.name);
+
+        try {
+          switch (hiveEnum) {
+            case HiveEnum.favorite_pokemon:
+              await ImageDownloader.downloadImage(
+                (data as Pokemon).image,
+                destination: AndroidDestinationType.custom(
+                    directory: HiveEnum.favorite_pokemon.name)
+                  ..inExternalFilesDir()
+                  ..subDirectory("images/${data.id}.png"),
+              );
+              break;
+            case HiveEnum.favorite_moves:
+              break;
+            case HiveEnum.favorite_items:
+              await ImageDownloader.downloadImage(
+                (data as Item).image,
+                destination: AndroidDestinationType.custom(
+                    directory: HiveEnum.favorite_items.name)
+                  ..inExternalFilesDir()
+                  ..subDirectory("images/${data.id}.png"),
+              );
+              break;
+            default:
+          }
+        } on PlatformException catch (error) {
+          print(error);
+          return false;
         }
-      } on PlatformException catch (error) {
-        print(error);
+
+        box.add(data);
+        return true;
       }
-      box.add(data);
     }
   }
 
@@ -54,26 +68,14 @@ class HiveManager extends IHaveManager {
   }
 
   @override
-  deleteDataFromBox<T>({required int index, required HiveEnum hiveEnum}) {
+  void deleteDataFromBox<T>({required T data, required HiveEnum hiveEnum}) {
     Box<T> box = Hive.box(hiveEnum.name);
 
-    box.deleteAt(index);
+    box.deleteAt(box.values.toList().indexOf(data));
   }
 
   @override
-  checkDataInBox<T>({required T data, required HiveEnum hiveEnum}) {
-    if (hiveEnum == HiveEnum.favorite_pokemon ||
-        hiveEnum == HiveEnum.initial_pokemon) {
-      return readDataFromBox<T>(HiveEnum.favorite_pokemon)
-              .values
-              .contains(data) ||
-          readDataFromBox<T>(HiveEnum.initial_pokemon).values.contains(data);
-    } else if (hiveEnum == HiveEnum.favorite_items ||
-        hiveEnum == HiveEnum.initial_items) {
-      return readDataFromBox<T>(HiveEnum.favorite_items)
-              .values
-              .contains(data) ||
-          readDataFromBox<T>(HiveEnum.initial_items).values.contains(data);
-    }
+  bool checkDataInBox<T>({required T data, required HiveEnum hiveEnum}) {
+    return readDataFromBox<T>(hiveEnum).values.contains(data);
   }
 }

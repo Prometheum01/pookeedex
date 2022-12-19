@@ -59,8 +59,6 @@ class _ListTemplateState extends State<ListTemplate> {
                           return MovesTile(move: widget.list[index]);
                         case ListType.items:
                           return ItemTile(item: widget.list[index]);
-                        case ListType.favorites:
-                          return const Text("Null");
                         default:
                           return const Text("Null");
                       }

@@ -47,7 +47,8 @@ class ItemDetailView extends StatelessWidget {
                         0.2,
                       ),
                       child: ItemCachedImage(
-                          item: item, type: HiveEnum.favorite_items),
+                        item: item,
+                      ),
                     ),
                     Padding(
                       padding: const PaddingConst.largeVertical(),

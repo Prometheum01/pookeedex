@@ -10,12 +10,12 @@ import 'package:pookeedex/product/model/pokemon.dart';
 import 'package:provider/provider.dart';
 
 class PookeeTile extends StatelessWidget {
-  const PookeeTile(
-      {super.key, required this.pokemon, this.type = HiveEnum.initial_pokemon});
+  const PookeeTile({
+    super.key,
+    required this.pokemon,
+  });
 
   final Pokemon pokemon;
-
-  final HiveEnum type;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,9 @@ class PookeeTile extends StatelessWidget {
           subtitle: Text(pokemon.id.toString().idForFronted),
           leading: SizedBox(
             width: context.dynamicWidth(0.15),
-            child: PookeeCachedImage(pookee: pokemon, type: type),
+            child: PookeeCachedImage(
+              pookee: pokemon,
+            ),
           ),
           trailing: SizedBox(
             width: context.dynamicWidth(0.3),

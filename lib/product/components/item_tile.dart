@@ -11,12 +11,12 @@ import '../model/item.dart';
 import 'widgets.dart';
 
 class ItemTile extends StatelessWidget {
-  const ItemTile(
-      {super.key, required this.item, this.type = HiveEnum.initial_items});
+  const ItemTile({
+    super.key,
+    required this.item,
+  });
 
   final Item item;
-
-  final HiveEnum type;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,9 @@ class ItemTile extends StatelessWidget {
           leading: SizedBox(
             height: context.dynamicHeight(0.05),
             width: context.dynamicHeight(0.05),
-            child: ItemCachedImage(item: item, type: type),
+            child: ItemCachedImage(
+              item: item,
+            ),
           ),
           title: Text(
             item.name.toTitleCase(),

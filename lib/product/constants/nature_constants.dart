@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pookeedex/core/constants/asset_const.dart';
 import 'package:pookeedex/product/model/nature.dart';
 
 import '../model/nature_color.dart';
@@ -56,7 +57,7 @@ class NatureConst {
           secondColor: Color(0xFFAFC836),
           shadowColor: Color(0xFF98C32F),
         ),
-        iconPath: "assets/svg/ic_bug.svg",
+        iconPath: AssetConst.bug,
       );
 
   static Nature get dragon => const Nature(
@@ -66,7 +67,7 @@ class NatureConst {
           secondColor: Color(0xFF0180C7),
           shadowColor: Color(0xFF076DC0),
         ),
-        iconPath: "assets/svg/ic_dragon.svg",
+        iconPath: AssetConst.dragon,
       );
 
   static Nature get fairy => const Nature(
@@ -76,7 +77,7 @@ class NatureConst {
           secondColor: Color(0xFFF3A7E7),
           shadowColor: Color(0xFFF294E9),
         ),
-        iconPath: "assets/svg/ic_fairy.svg",
+        iconPath: AssetConst.fairy,
       );
 
   static Nature get fire => const Nature(
@@ -86,7 +87,7 @@ class NatureConst {
           secondColor: Color(0xFFFBAE46),
           shadowColor: Color(0xFFFE9E54),
         ),
-        iconPath: "assets/svg/ic_fire.svg",
+        iconPath: AssetConst.fire,
       );
 
   static Nature get ghost => const Nature(
@@ -96,7 +97,7 @@ class NatureConst {
           secondColor: Color(0xFF7773D4),
           shadowColor: Color(0xFF656CC6),
         ),
-        iconPath: "assets/svg/ic_ghost.svg",
+        iconPath: AssetConst.ghost,
       );
 
   static Nature get ground => const Nature(
@@ -106,7 +107,7 @@ class NatureConst {
           secondColor: Color(0xFFD29463),
           shadowColor: Color(0xFFD88255),
         ),
-        iconPath: "assets/svg/ic_ground.svg",
+        iconPath: AssetConst.ground,
       );
 
   static Nature get normal => const Nature(
@@ -116,7 +117,7 @@ class NatureConst {
           secondColor: Color(0xFFA3A49E),
           shadowColor: Color(0xFF5D596A),
         ),
-        iconPath: "assets/svg/ic_normal.svg",
+        iconPath: AssetConst.normal,
       );
 
   static Nature get psychic => const Nature(
@@ -126,7 +127,7 @@ class NatureConst {
           secondColor: Color(0xFFFE9F92),
           shadowColor: Color(0xFFD94256),
         ),
-        iconPath: "assets/svg/ic_psychic.svg",
+        iconPath: AssetConst.psychic,
       );
 
   static Nature get steel => const Nature(
@@ -136,7 +137,7 @@ class NatureConst {
           secondColor: Color(0xFF58A6AA),
           shadowColor: Color(0xFF5094A1),
         ),
-        iconPath: "assets/svg/ic_steel.svg",
+        iconPath: AssetConst.steel,
       );
 
   static Nature get dark => const Nature(
@@ -146,7 +147,7 @@ class NatureConst {
           secondColor: Color(0xFF6E7587),
           shadowColor: Color(0xFF5D596A),
         ),
-        iconPath: "assets/svg/ic_dark.svg",
+        iconPath: AssetConst.dark,
       );
 
   static Nature get electric => const Nature(
@@ -156,7 +157,7 @@ class NatureConst {
           secondColor: Color(0xFFFBE273),
           shadowColor: Color(0xFFF4D556),
         ),
-        iconPath: "assets/svg/ic_electric.svg",
+        iconPath: AssetConst.electric,
       );
 
   static Nature get fight => const Nature(
@@ -166,7 +167,7 @@ class NatureConst {
           secondColor: Color(0xFFE74347),
           shadowColor: Color(0xFFD4445D),
         ),
-        iconPath: "assets/svg/ic_fight.svg",
+        iconPath: AssetConst.fight,
       );
 
   static Nature get flying => const Nature(
@@ -176,7 +177,7 @@ class NatureConst {
           secondColor: Color(0xFFA6C2F2),
           shadowColor: Color(0xFF9DB5E4),
         ),
-        iconPath: "assets/svg/ic_flying.svg",
+        iconPath: AssetConst.flying,
       );
 
   static Nature get grass => const Nature(
@@ -186,7 +187,7 @@ class NatureConst {
           secondColor: Color(0xFF5AC178),
           shadowColor: Color(0xFF64B954),
         ),
-        iconPath: "assets/svg/ic_grass.svg",
+        iconPath: AssetConst.grass,
       );
 
   static Nature get ice => const Nature(
@@ -196,7 +197,7 @@ class NatureConst {
           secondColor: Color(0xFF8CDDD4),
           shadowColor: Color(0xFF7ED4C9),
         ),
-        iconPath: "assets/svg/ic_ice.svg",
+        iconPath: AssetConst.ice,
       );
 
   static Nature get poison => const Nature(
@@ -206,7 +207,7 @@ class NatureConst {
           secondColor: Color(0xFFC261D4),
           shadowColor: Color(0xFFA36BCB),
         ),
-        iconPath: "assets/svg/ic_poison.svg",
+        iconPath: AssetConst.poison,
       );
 
   static Nature get rock => const Nature(
@@ -216,7 +217,7 @@ class NatureConst {
           secondColor: Color(0xFFD7CD90),
           shadowColor: Color(0xFFCBC194),
         ),
-        iconPath: "assets/svg/ic_rock.svg",
+        iconPath: AssetConst.rock,
       );
 
   static Nature get water => const Nature(
@@ -226,6 +227,6 @@ class NatureConst {
           secondColor: Color(0xFF6CBDE4),
           shadowColor: Color(0xFF559EDF),
         ),
-        iconPath: "assets/svg/ic_water.svg",
+        iconPath: AssetConst.water,
       );
 }

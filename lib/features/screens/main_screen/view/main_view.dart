@@ -26,11 +26,12 @@ class _MainViewState extends MainViewModel {
         isLoading
             ? Center(
                 child: Column(
-                children: const [
-                  CustomLoading(),
-                  Text("Please wait first loading take some time.")
-                ],
-              ))
+                  children: const [
+                    CustomLoading(),
+                    Text("Please wait first loading take some time.")
+                  ],
+                ),
+              )
             : Scaffold(
                 appBar: AppBar(
                   backgroundColor: Colors.transparent,
@@ -41,7 +42,7 @@ class _MainViewState extends MainViewModel {
                 backgroundColor: Colors.transparent,
                 body: Column(
                   children: [
-                    const MainGradient(),
+                    const MainGradient(height: 4),
                     Expanded(
                       child: PageView(
                         controller: pageController,
@@ -54,7 +55,7 @@ class _MainViewState extends MainViewModel {
                         ],
                       ),
                     ),
-                    const MainGradient(),
+                    const MainGradient(height: 4),
                   ],
                 ),
                 bottomNavigationBar: const CustomBottomNavigation(),

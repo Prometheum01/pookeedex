@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../core/enum/hive.dart';
 import '../../core/services/cache/hive_manager.dart';
@@ -8,19 +9,29 @@ import '../model/item.dart';
 import '../model/pokemon.dart';
 
 class PookeeCachedImage extends StatelessWidget {
-  const PookeeCachedImage(
-      {super.key, required this.pookee, required this.type});
+  const PookeeCachedImage({
+    super.key,
+    required this.pookee,
+  });
 
   final Pokemon pookee;
 
-  final HiveEnum type;
+  getPath() async {
+    Directory dir = await getExternalStorageDirectory() ?? Directory("");
+
+    return '${dir.path}/${HiveEnum.favorite_pokemon.name}/images/${pookee.id}.png';
+  }
 
   @override
   Widget build(BuildContext context) {
-    return HiveManager().checkDataInBox<Pokemon>(data: pookee, hiveEnum: type)
-        ? Image.file(File(
-            //TODO:Duzenle
-            "/storage/emulated/0/Android/data/com.example.pookeedex/files/${HiveEnum.pokemon_images.name}/images/${pookee.id}.png"))
+    return HiveManager().checkDataInBox<Pokemon>(
+            data: pookee, hiveEnum: HiveEnum.favorite_pokemon)
+        ? Image.file(
+            File(
+              //TODO:Duzenle
+              "/storage/emulated/0/Android/data/com.example.pookeedex/files/${HiveEnum.favorite_pokemon.name}/images/${pookee.id}.png",
+            ),
+          )
         : Image.network(
             pookee.image.toString(),
           );
@@ -28,18 +39,21 @@ class PookeeCachedImage extends StatelessWidget {
 }
 
 class ItemCachedImage extends StatelessWidget {
-  const ItemCachedImage({super.key, required this.item, required this.type});
+  const ItemCachedImage({
+    super.key,
+    required this.item,
+  });
 
   final Item item;
-  final HiveEnum type;
 
   @override
   Widget build(BuildContext context) {
-    return HiveManager().checkDataInBox<Item>(data: item, hiveEnum: type)
+    return HiveManager()
+            .checkDataInBox<Item>(data: item, hiveEnum: HiveEnum.favorite_items)
         ? Image.file(
             File(
               //TODO:Duzenle
-              "/storage/emulated/0/Android/data/com.example.pookeedex/files/${HiveEnum.item_images.name}/images/${item.id}.png",
+              "/storage/emulated/0/Android/data/com.example.pookeedex/files/${HiveEnum.favorite_items.name}/images/${item.id}.png",
             ),
             fit: BoxFit.cover,
           )

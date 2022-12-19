@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:pookeedex/core/enum/hive.dart';
-import 'package:pookeedex/core/services/cache/hive_manager.dart';
 import 'package:pookeedex/core/services/connectivity/network_connectivity.dart';
 import 'package:pookeedex/product/model/move.dart';
 
@@ -27,79 +25,35 @@ class MainScreenProvider extends ChangeNotifier {
     changeLoadingMain();
 
     if (!isInitialValuesLoaded) {
-      if (await checkConnection == InternetConnectionStatus.connected) {
-        if (await checkConnection == InternetConnectionStatus.disconnected) {
-        } else {
-          List<Pokemon> pookeeList = [];
-          List<Move> movesList = [];
-          List<Item> itemsList = [];
+      if (await checkConnection == InternetConnectionStatus.disconnected) {
+      } else {
+        List<Pokemon> pookeeList = [];
+        List<Move> movesList = [];
+        List<Item> itemsList = [];
 
-          if (loadedPokemonList.isEmpty) {
-            pookeeList = await PookeeService().fetchPokemons();
-          }
-          if (loadedMoveList.isEmpty) {
-            movesList = await PookeeService().fetchMoves();
-          }
-
-          if (loadedItemList.isEmpty) {
-            itemsList = await PookeeService().fetchItems();
-          }
-
-          for (Pokemon poke in pookeeList) {
-            await HiveManager()
-                .addDataToBox(data: poke, hiveEnum: HiveEnum.initial_pokemon);
-          }
-
-          for (Move move in movesList) {
-            await HiveManager()
-                .addDataToBox(data: move, hiveEnum: HiveEnum.initial_moves);
-          }
-
-          for (Item item in itemsList) {
-            await HiveManager()
-                .addDataToBox(data: item, hiveEnum: HiveEnum.initial_items);
-          }
-
-          setLoadedPokemonList(pookeeList);
-          setLoadedMoveList(movesList);
-          setLoadedItemList(itemsList);
+        if (loadedPokemonList.isEmpty) {
+          pookeeList = await PookeeService().fetchPokemons();
         }
-      }
-    } else {
-      //Loaded
+        if (loadedMoveList.isEmpty) {
+          movesList = await PookeeService().fetchMoves();
+        }
 
-      setLoadedPokemonList(HiveManager()
-          .readDataFromBox<Pokemon>(HiveEnum.initial_pokemon)
-          .values
-          .toList());
-      setLoadedMoveList(HiveManager()
-          .readDataFromBox<Move>(HiveEnum.initial_moves)
-          .values
-          .toList());
-      setLoadedItemList(HiveManager()
-          .readDataFromBox<Item>(HiveEnum.initial_items)
-          .values
-          .toList());
+        if (loadedItemList.isEmpty) {
+          itemsList = await PookeeService().fetchItems();
+        }
+
+        setLoadedPokemonList(pookeeList);
+        setLoadedMoveList(movesList);
+        setLoadedItemList(itemsList);
+      }
     }
     changeLoadingMain();
   }
 
   bool get isInitialValuesLoaded =>
-      HiveManager()
-          .readDataFromBox<Pokemon>(HiveEnum.initial_pokemon)
-          .values
-          .toList()
-          .isNotEmpty &&
-      HiveManager()
-          .readDataFromBox<Move>(HiveEnum.initial_moves)
-          .values
-          .toList()
-          .isNotEmpty &&
-      HiveManager()
-          .readDataFromBox<Item>(HiveEnum.initial_items)
-          .values
-          .toList()
-          .isNotEmpty;
+      _loadedPokemonList.isNotEmpty &&
+      _loadedMoveList.isNotEmpty &&
+      _loadedItemList.isNotEmpty;
 
   InternetConnectionStatus get connection =>
       _connection ?? InternetConnectionStatus.disconnected;
