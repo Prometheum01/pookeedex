@@ -20,7 +20,7 @@ An app for showing info about pokemons, their moves, and the items in the univer
 
 ## PokeAPI
 
-- [PokeApi.com](https://pokeapi.co/)
+- [PokeApi.co](https://pokeapi.co/)
 
 ## Screenshots
 
