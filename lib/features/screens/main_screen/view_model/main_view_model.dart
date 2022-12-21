@@ -16,10 +16,10 @@ abstract class MainViewModel extends State<MainView> {
   void initState() {
     super.initState();
 
-    wantPermission();
-
     pageController = PageController();
     context.read<MainScreenProvider>().setPageController(pageController);
+
+    wantPermission();
   }
 
   wantPermission() async {
@@ -30,12 +30,14 @@ abstract class MainViewModel extends State<MainView> {
         exit(0);
       } else {
         //First opening
+        print("asd");
         context.read<MainScreenProvider>().listenConnection();
 
         //Cache initial data
 
       }
     } else {
+      print("asd");
       context.read<MainScreenProvider>().listenConnection();
 
       context.read<CacheProvider>().initializeLists();

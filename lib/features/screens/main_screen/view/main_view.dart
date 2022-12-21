@@ -20,6 +20,9 @@ class _MainViewState extends MainViewModel {
     return Stack(
       children: [
         const MainGradient(),
+        Container(
+          color: Colors.white.withOpacity(0.8),
+        ),
         isLoading
             ? const Center(
                 child: CustomLoading(),
@@ -31,7 +34,7 @@ class _MainViewState extends MainViewModel {
                   toolbarHeight: context.dynamicHeight(0.15),
                   title: const SearchBar(),
                 ),
-                backgroundColor: Colors.white.withOpacity(0.8),
+                backgroundColor: Colors.transparent,
                 body: Column(
                   children: [
                     const MainGradient(height: 4),

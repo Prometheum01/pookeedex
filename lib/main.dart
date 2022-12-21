@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
         //TODO:ErrorWidget
         return Text("Error");
       },
-      initialRoute: NavigatorKeys.splash.path,
+      initialRoute: NavigatorKeys.main.path,
       routes: NavigatorService.navigatorKeys,
     );
   }

@@ -11,9 +11,9 @@ class MainScreenProvider extends ChangeNotifier {
   InternetConnectionStatus? _connection;
 
   listenConnection() async {
-    await checkAndFetchInitialList();
+    checkAndFetchInitialList();
     NetworkConnectivity().handleNetworkConnectivity((result) async {
-      await checkAndFetchInitialList();
+      checkAndFetchInitialList();
       _connection = result;
 
       notifyListeners();
@@ -21,32 +21,41 @@ class MainScreenProvider extends ChangeNotifier {
   }
 
   checkAndFetchInitialList() async {
-    changeLoadingMain();
+    print("dsa");
 
-    if (!isInitialValuesLoaded) {
-      if (await checkConnection == InternetConnectionStatus.disconnected) {
-      } else {
-        List<Pokemon> pookeeList = [];
-        List<Move> movesList = [];
-        List<Item> itemsList = [];
+    if (!_isLoadingMain) {
+      changeLoadingMain();
+      if (!isInitialValuesLoaded) {
+        if (await checkConnection == InternetConnectionStatus.disconnected) {
+        } else {
+          print("123");
+          List<Pokemon> pookeeList = [];
+          List<Move> movesList = [];
+          List<Item> itemsList = [];
 
-        if (loadedPokemonList.isEmpty) {
-          pookeeList = await PookeeService().fetchPokemons();
+          if (loadedPokemonList.isEmpty) {
+            print("1");
+            pookeeList = await PookeeService().fetchPokemons();
+          }
+          if (loadedMoveList.isEmpty) {
+            print("2");
+            movesList = await PookeeService().fetchMoves();
+          }
+
+          if (loadedItemList.isEmpty) {
+            print("3");
+            itemsList = await PookeeService().fetchItems();
+          }
+
+          setLoadedPokemonList(pookeeList);
+          setLoadedMoveList(movesList);
+          setLoadedItemList(itemsList);
+          print(pookeeList);
         }
-        if (loadedMoveList.isEmpty) {
-          movesList = await PookeeService().fetchMoves();
-        }
-
-        if (loadedItemList.isEmpty) {
-          itemsList = await PookeeService().fetchItems();
-        }
-
-        setLoadedPokemonList(pookeeList);
-        setLoadedMoveList(movesList);
-        setLoadedItemList(itemsList);
       }
+
+      changeLoadingMain();
     }
-    changeLoadingMain();
   }
 
   bool get isInitialValuesLoaded =>
