@@ -24,54 +24,58 @@ class BreedingInfo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                children: [
-                  Text(
-                    "Egg Group",
-                    style: context.textTheme.headline5?.copyWith(
-                      fontSize: 18,
-                      color: pookee.natures.first.natureColor.firstColor,
-                    ),
-                  ),
-                  Padding(
-                    padding: const PaddingConst.smallVertical(),
-                    child: Text(
-                      pookee.breeding.eggGroups[0].name.toTitleCase(),
+              Expanded(
+                child: Column(
+                  children: [
+                    Text(
+                      "Egg Group",
                       style: context.textTheme.headline5?.copyWith(
                         fontSize: 18,
+                        color: pookee.natures.first.natureColor.firstColor,
                       ),
                     ),
-                  ),
-                  pookee.breeding.eggGroups.length == 1
-                      ? const SizedBox.shrink()
-                      : Text(
-                          pookee.breeding.eggGroups[1].name.toTitleCase(),
-                          style: context.textTheme.headline5?.copyWith(
-                            fontSize: 18,
-                          ),
+                    Padding(
+                      padding: const PaddingConst.smallVertical(),
+                      child: Text(
+                        pookee.breeding.eggGroups[0].name.toTitleCase(),
+                        style: context.textTheme.headline5?.copyWith(
+                          fontSize: 18,
                         ),
-                ],
+                      ),
+                    ),
+                    pookee.breeding.eggGroups.length == 1
+                        ? const SizedBox.shrink()
+                        : Text(
+                            pookee.breeding.eggGroups[1].name.toTitleCase(),
+                            style: context.textTheme.headline5?.copyWith(
+                              fontSize: 18,
+                            ),
+                          ),
+                  ],
+                ),
               ),
               const CustomVerticalDivider(),
-              Column(
-                children: [
-                  Text(
-                    "Hatch Time",
-                    style: context.textTheme.headline5?.copyWith(
-                      fontSize: 18,
-                      color: pookee.natures.first.natureColor.firstColor,
-                    ),
-                  ),
-                  Padding(
-                    padding: const PaddingConst.smallVertical(),
-                    child: Text(
-                      "${pookee.breeding.hatchCounter} cycles",
+              Expanded(
+                child: Column(
+                  children: [
+                    Text(
+                      "Hatch Time",
                       style: context.textTheme.headline5?.copyWith(
                         fontSize: 18,
+                        color: pookee.natures.first.natureColor.firstColor,
                       ),
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: const PaddingConst.smallVertical(),
+                      child: Text(
+                        "${pookee.breeding.hatchCounter} cycles",
+                        style: context.textTheme.headline5?.copyWith(
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

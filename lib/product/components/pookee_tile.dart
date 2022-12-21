@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:pookeedex/core/constants/padding_const.dart';
-import 'package:pookeedex/core/enum/hive.dart';
 import 'package:pookeedex/core/extensions/string_extension.dart';
 import 'package:pookeedex/core/services/navigator/navigator_service.dart';
 import 'package:pookeedex/core/services/provider/pookee_provider.dart';
 import 'package:pookeedex/product/components/widgets.dart';
 import 'package:pookeedex/product/model/pokemon.dart';
 import 'package:provider/provider.dart';
+
+import '../../core/enum/hive.dart';
 
 class PookeeTile extends StatelessWidget {
   const PookeeTile({
@@ -39,11 +40,8 @@ class PookeeTile extends StatelessWidget {
           ),
           subtitle: Text(pokemon.id.toString().idForFronted),
           leading: SizedBox(
-            width: context.dynamicWidth(0.15),
-            child: PookeeCachedImage(
-              pookee: pokemon,
-            ),
-          ),
+              width: context.dynamicWidth(0.15),
+              child: CachedPokemonImage(pookee: pokemon)),
           trailing: SizedBox(
             width: context.dynamicWidth(0.3),
             child: PokemonNatureList(pokemon: pokemon),

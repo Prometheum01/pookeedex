@@ -12,11 +12,10 @@ class MainScreenProvider extends ChangeNotifier {
 
   listenConnection() async {
     await checkAndFetchInitialList();
-
     NetworkConnectivity().handleNetworkConnectivity((result) async {
       await checkAndFetchInitialList();
-
       _connection = result;
+
       notifyListeners();
     });
   }

@@ -47,6 +47,9 @@ class Pokemon extends Equatable {
   @HiveField(9)
   final Evolve evolve;
 
+  @HiveField(10)
+  String? cacheImageToken;
+
   Pokemon({
     required this.id,
     required this.name,
@@ -58,6 +61,7 @@ class Pokemon extends Equatable {
     required this.capture,
     required this.evolve,
     this.moves,
+    this.cacheImageToken,
   });
 
   static Pokemon fromJson({
@@ -130,6 +134,16 @@ class Pokemon extends Equatable {
       );
 
   @override
-  List<Object?> props() =>
-      [id, name, image, abilities, stats, types, breeding, capture, evolve];
+  List<Object?> props() => [
+        id,
+        name,
+        image,
+        abilities,
+        stats,
+        types,
+        breeding,
+        capture,
+        evolve,
+        cacheImageToken
+      ];
 }

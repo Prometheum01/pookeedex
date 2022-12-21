@@ -38,9 +38,7 @@ class _DetailViewState extends DetailViewModel {
                   children: [
                     SizedBox(
                       height: context.dynamicHeight(0.2),
-                      child: PookeeCachedImage(
-                        pookee: pookee,
-                      ),
+                      child: CachedPokemonImage(pookee: pookee),
                     ),
                     Padding(
                       padding: const PaddingConst.largeVertical(),

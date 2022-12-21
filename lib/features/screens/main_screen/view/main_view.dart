@@ -20,17 +20,9 @@ class _MainViewState extends MainViewModel {
     return Stack(
       children: [
         const MainGradient(),
-        Container(
-          color: Colors.white.withOpacity(0.8),
-        ),
         isLoading
-            ? Center(
-                child: Column(
-                  children: const [
-                    CustomLoading(),
-                    Text("Please wait first loading take some time.")
-                  ],
-                ),
+            ? const Center(
+                child: CustomLoading(),
               )
             : Scaffold(
                 appBar: AppBar(
@@ -39,7 +31,7 @@ class _MainViewState extends MainViewModel {
                   toolbarHeight: context.dynamicHeight(0.15),
                   title: const SearchBar(),
                 ),
-                backgroundColor: Colors.transparent,
+                backgroundColor: Colors.white.withOpacity(0.8),
                 body: Column(
                   children: [
                     const MainGradient(height: 4),

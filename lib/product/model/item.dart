@@ -5,6 +5,7 @@ import 'package:pookeedex/core/extensions/string_extension.dart';
 part 'item.g.dart';
 
 @HiveType(typeId: 5)
+// ignore: must_be_immutable
 class Item extends Equatable {
   @HiveField(0)
   final String name;
@@ -21,12 +22,16 @@ class Item extends Equatable {
   @HiveField(4)
   final int id;
 
-  const Item({
+  @HiveField(5)
+  String? cacheImageToken;
+
+  Item({
     required this.name,
     required this.cost,
     required this.image,
     required this.description,
     required this.id,
+    this.cacheImageToken,
   });
 
   static Item fromJson(Map<String, dynamic> json) {
@@ -42,9 +47,10 @@ class Item extends Equatable {
     );
   }
 
-  static Item get emptyItem => const Item(
-      name: "Null", cost: "0", image: "", description: "Null", id: -1);
+  static Item get emptyItem =>
+      Item(name: "Null", cost: "0", image: "", description: "Null", id: -1);
 
   @override
-  List<Object?> props() => [name, cost, image, description, id];
+  List<Object?> props() =>
+      [name, cost, image, description, id, cacheImageToken];
 }

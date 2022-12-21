@@ -64,24 +64,26 @@ class _CaptureInfoColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          title,
-          style: context.textTheme.headline5?.copyWith(
-            fontSize: 18,
-            color: titleColor,
+    return Expanded(
+      child: Column(
+        children: [
+          Text(
+            title,
+            style: context.textTheme.headline5?.copyWith(
+              fontSize: 18,
+              color: titleColor,
+            ),
           ),
-        ),
-        Padding(
-          padding: const PaddingConst.smallVertical(),
-          child: Text(
-            subtitle,
-            style: context.textTheme.headline5
-                ?.copyWith(fontSize: 18, color: subtitleColor),
+          Padding(
+            padding: const PaddingConst.smallVertical(),
+            child: Text(
+              subtitle,
+              style: context.textTheme.headline5
+                  ?.copyWith(fontSize: 18, color: subtitleColor),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

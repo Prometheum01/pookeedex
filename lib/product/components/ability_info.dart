@@ -27,17 +27,20 @@ class AbilityInfo extends StatelessWidget {
                 ),
               )
             : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _AbilityInfoColumn(
-                    ability: pookee.abilities[0],
-                    color: pookee.mainFirstColor,
+                  Expanded(
+                    child: _AbilityInfoColumn(
+                      ability: pookee.abilities[0],
+                      color: pookee.mainFirstColor,
+                    ),
                   ),
                   const CustomVerticalDivider(),
-                  _AbilityInfoColumn(
-                    ability: pookee.abilities[1],
-                    color: pookee.mainFirstColor,
+                  Expanded(
+                    child: _AbilityInfoColumn(
+                      ability: pookee.abilities[1],
+                      color: pookee.mainFirstColor,
+                    ),
                   ),
                 ],
               ),

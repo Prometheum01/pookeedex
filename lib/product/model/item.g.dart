@@ -22,13 +22,14 @@ class ItemAdapter extends TypeAdapter<Item> {
       image: fields[2] as String,
       description: fields[3] as String,
       id: fields[4] as int,
+      cacheImageToken: fields[5] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Item obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class ItemAdapter extends TypeAdapter<Item> {
       ..writeByte(3)
       ..write(obj.description)
       ..writeByte(4)
-      ..write(obj.id);
+      ..write(obj.id)
+      ..writeByte(5)
+      ..write(obj.cacheImageToken);
   }
 
   @override

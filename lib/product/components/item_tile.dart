@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:pookeedex/core/constants/color_const.dart';
-import 'package:pookeedex/product/components/cached_image.dart';
 
 import '../../core/enum/hive.dart';
 import '../../core/services/navigator/navigator_service.dart';
@@ -31,7 +28,7 @@ class ItemTile extends StatelessWidget {
           leading: SizedBox(
             height: context.dynamicHeight(0.05),
             width: context.dynamicHeight(0.05),
-            child: ItemCachedImage(
+            child: CachedItemImage(
               item: item,
             ),
           ),

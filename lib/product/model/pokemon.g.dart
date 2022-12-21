@@ -27,13 +27,14 @@ class PokemonAdapter extends TypeAdapter<Pokemon> {
       capture: fields[8] as Capture,
       evolve: fields[9] as Evolve,
       moves: (fields[6] as List?)?.cast<Move>(),
+      cacheImageToken: fields[10] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Pokemon obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -53,7 +54,9 @@ class PokemonAdapter extends TypeAdapter<Pokemon> {
       ..writeByte(8)
       ..write(obj.capture)
       ..writeByte(9)
-      ..write(obj.evolve);
+      ..write(obj.evolve)
+      ..writeByte(10)
+      ..write(obj.cacheImageToken);
   }
 
   @override

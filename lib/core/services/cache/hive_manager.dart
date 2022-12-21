@@ -1,10 +1,10 @@
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
-import 'package:image_downloader/image_downloader.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pookeedex/core/enum/hive.dart';
 import 'package:pookeedex/core/services/cache/i_hive_manager.dart';
 import 'package:pookeedex/core/services/connectivity/network_connectivity.dart';
+import 'package:pookeedex/core/services/image_downloader/image_downloader.dart';
 import 'package:pookeedex/product/model/item.dart';
 import 'package:pookeedex/product/model/pokemon.dart';
 
@@ -21,6 +21,7 @@ class HiveManager extends IHaveManager {
       if (await NetworkConnectivity().checkNetworkConnectivity() ==
           InternetConnectionStatus.disconnected) {
         print("There is no Internet");
+
         return false;
       } else {
         Box<T> box = Hive.box(hiveEnum.name);
@@ -28,24 +29,27 @@ class HiveManager extends IHaveManager {
         try {
           switch (hiveEnum) {
             case HiveEnum.favorite_pokemon:
-              await ImageDownloader.downloadImage(
-                (data as Pokemon).image,
-                destination: AndroidDestinationType.custom(
-                    directory: HiveEnum.favorite_pokemon.name)
-                  ..inExternalFilesDir()
-                  ..subDirectory("images/${data.id}.png"),
-              );
+              if ((data as Pokemon).cacheImageToken == null) {
+                String? path = await ImageDownloaderCache()
+                    .downloadImageForCache(
+                        image: data.image,
+                        id: data.id.toString(),
+                        hiveEnum: hiveEnum);
+                data.cacheImageToken = path;
+              }
+
               break;
             case HiveEnum.favorite_moves:
               break;
             case HiveEnum.favorite_items:
-              await ImageDownloader.downloadImage(
-                (data as Item).image,
-                destination: AndroidDestinationType.custom(
-                    directory: HiveEnum.favorite_items.name)
-                  ..inExternalFilesDir()
-                  ..subDirectory("images/${data.id}.png"),
-              );
+              if ((data as Item).cacheImageToken == null) {
+                String? path = await ImageDownloaderCache()
+                    .downloadImageForCache(
+                        image: data.image,
+                        id: data.id.toString(),
+                        hiveEnum: hiveEnum);
+                data.cacheImageToken = path;
+              }
               break;
             default:
           }
@@ -53,7 +57,6 @@ class HiveManager extends IHaveManager {
           print(error);
           return false;
         }
-
         box.add(data);
         return true;
       }
@@ -68,8 +71,17 @@ class HiveManager extends IHaveManager {
   }
 
   @override
-  void deleteDataFromBox<T>({required T data, required HiveEnum hiveEnum}) {
+  void deleteDataFromBox<T>(
+      {required T data, required HiveEnum hiveEnum}) async {
     Box<T> box = Hive.box(hiveEnum.name);
+
+    if (data is Pokemon) {
+      await ImageDownloaderCache()
+          .removeImageFromCache(path: data.cacheImageToken!);
+    } else if (data is Item) {
+      await ImageDownloaderCache()
+          .removeImageFromCache(path: data.cacheImageToken!);
+    }
 
     box.deleteAt(box.values.toList().indexOf(data));
   }

@@ -46,9 +46,7 @@ class ItemDetailView extends StatelessWidget {
                       width: context.dynamicHeight(
                         0.2,
                       ),
-                      child: ItemCachedImage(
-                        item: item,
-                      ),
+                      child: CachedItemImage(item: item),
                     ),
                     Padding(
                       padding: const PaddingConst.largeVertical(),

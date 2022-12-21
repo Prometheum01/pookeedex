@@ -51,6 +51,7 @@ class CacheProvider extends ChangeNotifier {
   }
 
   //Getter
+
   List<Pokemon> get pookeeList => _pookeeList;
 
   List<Move> get moveList => _moveList;
