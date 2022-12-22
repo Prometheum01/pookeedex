@@ -38,13 +38,14 @@ class PookeeService {
     }
   }
 
-  Future<List<Item>> fetchItems({int page = 0, int itemPerPage = 10}) async {
+  Future<List<Item>> fetchItems(
+      {int page = 0, int itemPerPage = 10, bool notPage = false}) async {
     List<Item> itemList = [];
     try {
       final response = await manager.get(
         NetworkEnums.item.path,
         queryParameters: {
-          NetworkEnums.offset.name: page * itemPerPage,
+          NetworkEnums.offset.name: notPage ? page : page * itemPerPage,
           NetworkEnums.limit.name: itemPerPage,
         },
       );
@@ -82,12 +83,13 @@ class PookeeService {
     }
   }
 
-  Future<List<Move>> fetchMoves({int page = 0, int movesPerPage = 10}) async {
+  Future<List<Move>> fetchMoves(
+      {int page = 0, int movesPerPage = 10, bool notPage = false}) async {
     List<Move> moveList = [];
     try {
       final response =
           await manager.get(NetworkEnums.move.path, queryParameters: {
-        NetworkEnums.offset.name: page * movesPerPage,
+        NetworkEnums.offset.name: notPage ? page : page * movesPerPage,
         NetworkEnums.limit.name: movesPerPage,
       });
 
@@ -194,13 +196,16 @@ class PookeeService {
     }
   }
 
-  Future<List<Pokemon>> fetchPokemons(
-      {int page = 0, int pokemonPerPage = 10}) async {
+  Future<List<Pokemon>> fetchPokemons({
+    int page = 0,
+    int pokemonPerPage = 10,
+    bool notPage = false, // Page not multiple with pokemon per page
+  }) async {
     List<Pokemon> pookeeList = [];
     try {
       final response =
           await manager.get(NetworkEnums.pokemon.path, queryParameters: {
-        NetworkEnums.offset.name: page * pokemonPerPage,
+        NetworkEnums.offset.name: notPage ? page : page * pokemonPerPage,
         NetworkEnums.limit.name: pokemonPerPage,
       });
 

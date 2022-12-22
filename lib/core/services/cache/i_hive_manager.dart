@@ -41,13 +41,21 @@ abstract class IHaveManager<T> {
     await Hive.openBox<Pokemon>(HiveEnum.favorite_pokemon.name);
     await Hive.openBox<Move>(HiveEnum.favorite_moves.name);
     await Hive.openBox<Item>(HiveEnum.favorite_items.name);
+
+    await Hive.openBox<Pokemon>(HiveEnum.initial_pokemon.name);
+    await Hive.openBox<Move>(HiveEnum.initial_moves.name);
+    await Hive.openBox<Item>(HiveEnum.initial_items.name);
   }
+
+  Future<void> addMultipleData<T>(
+      {required List<T> data, required HiveEnum hiveEnum}) async {}
 
   addDataToBox<T>({required T data, required HiveEnum hiveEnum}) {}
 
   readDataFromBox<T>(HiveEnum hiveEnum) {}
 
-  deleteDataFromBox<T>({required T data, required HiveEnum hiveEnum}) {}
+  deleteDataFromBox<T>(
+      {required T data, required HiveEnum hiveEnum, bool deleteImage = true}) {}
 
   checkDataInBox<T>({required T data, required HiveEnum hiveEnum}) {}
 }

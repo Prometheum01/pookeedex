@@ -18,5 +18,5 @@ export 'package:pookeedex/product/components/main_gradient.dart';
 export 'package:pookeedex/product/components/list_template.dart';
 export 'package:pookeedex/product/components/item_tile.dart';
 export 'package:pookeedex/product/components/cost_widget.dart';
-export 'package:pookeedex/product/components/favorite_button.dart';
+export 'package:pookeedex/product/components/favorite_button/view/favorite_button_view.dart';
 export 'package:pookeedex/product/components/cached_image.dart';

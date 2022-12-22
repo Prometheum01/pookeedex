@@ -6,9 +6,95 @@ import 'package:pookeedex/core/services/cache/i_hive_manager.dart';
 import 'package:pookeedex/core/services/connectivity/network_connectivity.dart';
 import 'package:pookeedex/core/services/image_downloader/image_downloader.dart';
 import 'package:pookeedex/product/model/item.dart';
+import 'package:pookeedex/product/model/move.dart';
 import 'package:pookeedex/product/model/pokemon.dart';
 
 class HiveManager extends IHaveManager {
+  @override
+  Future<void> addMultipleData<T>(
+      {required List<T> data, required HiveEnum hiveEnum}) async {
+    Box<T> box = Hive.box<T>(hiveEnum.name);
+
+    switch (T) {
+      case Pokemon:
+        for (Pokemon temp in data as List<Pokemon>) {
+          print(temp.name);
+          if (checkDataInBox<Pokemon>(data: temp, hiveEnum: hiveEnum)) {
+            if (temp.cacheImageToken == null) {
+              if (await NetworkConnectivity().checkNetworkConnectivity() ==
+                  InternetConnectionStatus.disconnected) {
+                print("There is no Internet");
+              } else {
+                String? path = await ImageDownloaderCache()
+                    .downloadImageForCache(
+                        image: temp.image,
+                        id: temp.id.toString(),
+                        hiveEnum: hiveEnum);
+                temp.cacheImageToken = path;
+              }
+              box.add(temp as T);
+            }
+          } else {
+            if (await NetworkConnectivity().checkNetworkConnectivity() ==
+                InternetConnectionStatus.disconnected) {
+              print("There is no Internet");
+            } else {
+              String? path = await ImageDownloaderCache().downloadImageForCache(
+                  image: temp.image,
+                  id: temp.id.toString(),
+                  hiveEnum: hiveEnum);
+              temp.cacheImageToken = path;
+            }
+            box.add(temp as T);
+          }
+        }
+
+        break;
+      case Move:
+        for (Move temp in data as List<Move>) {
+          if (!checkDataInBox<Move>(data: temp, hiveEnum: hiveEnum)) {
+            box.add(temp as T);
+          }
+        }
+
+        break;
+      case Item:
+        for (Item temp in data as List<Item>) {
+          if (checkDataInBox<Item>(data: temp, hiveEnum: hiveEnum)) {
+            if (temp.cacheImageToken == null) {
+              if (await NetworkConnectivity().checkNetworkConnectivity() ==
+                  InternetConnectionStatus.disconnected) {
+                print("There is no Internet");
+              } else {
+                String? path = await ImageDownloaderCache()
+                    .downloadImageForCache(
+                        image: temp.image,
+                        id: temp.id.toString(),
+                        hiveEnum: hiveEnum);
+                temp.cacheImageToken = path;
+                box.add(temp as T);
+              }
+            }
+          } else {
+            if (await NetworkConnectivity().checkNetworkConnectivity() ==
+                InternetConnectionStatus.disconnected) {
+              print("There is no Internet");
+            } else {
+              String? path = await ImageDownloaderCache().downloadImageForCache(
+                  image: temp.image,
+                  id: temp.id.toString(),
+                  hiveEnum: hiveEnum);
+              temp.cacheImageToken = path;
+            }
+            box.add(temp as T);
+          }
+        }
+        break;
+      default:
+        print('default');
+    }
+  }
+
   @override
   Future<bool> addDataToBox<T>(
       {required T data, required HiveEnum hiveEnum}) async {
@@ -71,16 +157,26 @@ class HiveManager extends IHaveManager {
   }
 
   @override
-  void deleteDataFromBox<T>(
-      {required T data, required HiveEnum hiveEnum}) async {
+  Future<void> deleteDataFromBox<T>(
+      {required T data,
+      required HiveEnum hiveEnum,
+      bool deleteImage = true}) async {
     Box<T> box = Hive.box(hiveEnum.name);
 
-    if (data is Pokemon) {
-      await ImageDownloaderCache()
-          .removeImageFromCache(path: data.cacheImageToken!);
-    } else if (data is Item) {
-      await ImageDownloaderCache()
-          .removeImageFromCache(path: data.cacheImageToken!);
+    if (deleteImage) {
+      if (data is Pokemon) {
+        if (data.id > 10) {
+          //Initial images not deleted
+          await ImageDownloaderCache()
+              .removeImageFromCache(path: data.cacheImageToken!);
+        }
+      } else if (data is Item) {
+        if (data.id > 10) {
+          //Initial images not deleted
+          await ImageDownloaderCache()
+              .removeImageFromCache(path: data.cacheImageToken!);
+        }
+      }
     }
 
     box.deleteAt(box.values.toList().indexOf(data));

@@ -18,8 +18,10 @@ class _SplashViewState extends SplashViewModel {
         const MainGradient(),
         Scaffold(
           backgroundColor: Colors.white.withOpacity(0.8),
-          body: const Center(
-            child: CustomLoading(),
+          body: Center(
+            child: Column(
+              children: const [CustomLoading(), Text("Splash Screen :)")],
+            ),
           ),
         ),
       ],
