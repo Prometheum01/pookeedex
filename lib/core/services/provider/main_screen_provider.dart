@@ -3,6 +3,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pookeedex/core/enum/hive.dart';
 import 'package:pookeedex/core/services/cache/hive_manager.dart';
 import 'package:pookeedex/core/services/connectivity/network_connectivity.dart';
+import 'package:pookeedex/core/services/permission/permission_manager.dart';
 import 'package:pookeedex/product/model/move.dart';
 
 import '../../../product/model/item.dart';
@@ -27,6 +28,8 @@ class MainScreenProvider extends ChangeNotifier {
 
   bool _isLoadingMain = false;
 
+  bool _cacheLoading = false;
+
   List<Pokemon> _loadedPokemonList = [];
 
   List<Move> _loadedMoveList = [];
@@ -43,16 +46,28 @@ class MainScreenProvider extends ChangeNotifier {
 
   listenConnection() async {
     NetworkConnectivity().handleNetworkConnectivity((result) async {
+      InternetConnectionStatus? beforeStatus = _connection;
+
       _connection = result;
       notifyListeners();
+
+      print("a");
+      if (result == InternetConnectionStatus.connected &&
+          beforeStatus == InternetConnectionStatus.disconnected) {
+        print("b");
+        await checkAndFetchInitialList();
+        cacheInitialValues();
+      }
     });
   }
 
   Future<void> checkAndFetchInitialList() async {
+    print("1");
     if (!_isLoadingMain) {
       changeLoadingMain();
-
+      print("2");
       if (!isInitialValuesLoaded) {
+        print("3");
         //If internet and initial values not
 
         if (initialPokemonFromHive.length >= INITIAL_LIST_LENGTH) {
@@ -109,8 +124,7 @@ class MainScreenProvider extends ChangeNotifier {
             }
           }
         }
-
-        print('asddsa');
+        print("4");
       }
 
       changeLoadingMain();
@@ -118,33 +132,39 @@ class MainScreenProvider extends ChangeNotifier {
   }
 
   Future<void> cacheInitialValues() async {
-    if (_loadedPokemonList.length <= INITIAL_LIST_LENGTH) {
-      await HiveManager().addMultipleData<Pokemon>(
-        data: _loadedPokemonList.sublist(
-          initialPokemonFromHive.isEmpty
-              ? 0
-              : initialPokemonFromHive.length - 1,
-        ),
-        hiveEnum: HiveEnum.initial_pokemon,
-      );
-    }
+    if (await PermissionManager().hasPermissionForStorage) {
+      changeCacheLoading();
 
-    if (_loadedMoveList.length <= INITIAL_LIST_LENGTH) {
-      await HiveManager().addMultipleData<Move>(
-        data: _loadedMoveList.sublist(
-          initialMovesFromHive.isEmpty ? 0 : initialMovesFromHive.length,
-        ),
-        hiveEnum: HiveEnum.initial_moves,
-      );
-    }
+      if (_loadedPokemonList.length <= INITIAL_LIST_LENGTH) {
+        await HiveManager().addMultipleData<Pokemon>(
+          data: _loadedPokemonList.sublist(
+            initialPokemonFromHive.isEmpty
+                ? 0
+                : initialPokemonFromHive.length - 1,
+          ),
+          hiveEnum: HiveEnum.initial_pokemon,
+        );
+      }
 
-    if (initialItemsFromHive.length <= INITIAL_LIST_LENGTH) {
-      await HiveManager().addMultipleData<Item>(
-        data: _loadedItemList.sublist(
-          initialItemsFromHive.isEmpty ? 0 : initialItemsFromHive.length,
-        ),
-        hiveEnum: HiveEnum.initial_items,
-      );
+      if (_loadedMoveList.length <= INITIAL_LIST_LENGTH) {
+        await HiveManager().addMultipleData<Move>(
+          data: _loadedMoveList.sublist(
+            initialMovesFromHive.isEmpty ? 0 : initialMovesFromHive.length,
+          ),
+          hiveEnum: HiveEnum.initial_moves,
+        );
+      }
+
+      if (initialItemsFromHive.length <= INITIAL_LIST_LENGTH) {
+        await HiveManager().addMultipleData<Item>(
+          data: _loadedItemList.sublist(
+            initialItemsFromHive.isEmpty ? 0 : initialItemsFromHive.length,
+          ),
+          hiveEnum: HiveEnum.initial_items,
+        );
+      }
+
+      changeCacheLoading();
     }
   }
 
@@ -222,6 +242,11 @@ class MainScreenProvider extends ChangeNotifier {
     }
   }
 
+  changeCacheLoading() {
+    _cacheLoading = !_cacheLoading;
+    notifyListeners();
+  }
+
   //Getter Functions
 
   String get selectedTabName {
@@ -255,6 +280,8 @@ class MainScreenProvider extends ChangeNotifier {
   bool get isPaginateLoadingHome => _isPaginateLoadingHome;
 
   bool get isLoadingMain => _isLoadingMain;
+
+  bool get cacheLoading => _cacheLoading;
 
   List<Pokemon> get initialPokemonFromHive => HiveManager()
       .readDataFromBox<Pokemon>(HiveEnum.initial_pokemon)

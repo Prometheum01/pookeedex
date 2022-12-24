@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pookeedex/product/components/favorite_button/view/favorite_button_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/services/cache/hive_manager.dart';
+import '../../../../core/services/permission/permission_manager.dart';
 import '../../../../core/services/provider/cache_provider.dart';
 import '../../../../core/services/provider/main_screen_provider.dart';
 
@@ -18,8 +20,31 @@ abstract class FavoriteButtonViewModel<T> extends State<FavoriteButton<T>> {
     checkIsHas();
   }
 
-  //TODO:Ilk on verileri ozellikle kontrol et. Resimli olanlari
-  Future<void> newClickButton() async {
+  Future<void> checkPermissionToClick() async {
+    await PermissionManager().askStoragePermission(
+      permanentlyDeniedFunction: () async {
+        await openAppSettings();
+        showCustomSnackBar('You have to give permission for added favorite');
+      },
+      deniedFunction: () async {
+        showCustomSnackBar('You have to give permission for added favorite');
+      },
+      grantedFunction: () async {
+        await clickButton();
+      },
+      grantedBeforeFunction: () async {
+        await clickButton();
+      },
+      limitedFunction: () async {
+        await clickButton();
+      },
+      restrictedFunction: () async {
+        showCustomSnackBar('You have to give permission for added favorite');
+      },
+    );
+  }
+
+  Future<void> clickButton() async {
     changeLoading();
     if (_isHas) {
       await HiveManager()
@@ -45,33 +70,6 @@ abstract class FavoriteButtonViewModel<T> extends State<FavoriteButton<T>> {
           context.read<CacheProvider>().initializeLists();
         }
       }
-    }
-    changeLoading();
-  }
-
-  clickButton() async {
-    changeLoading();
-    if (await context.read<MainScreenProvider>().checkConnection ==
-        InternetConnectionStatus.connected) {
-      if (_isHas) {
-        HiveManager()
-            .deleteDataFromBox<T>(data: widget.data, hiveEnum: widget.hiveEnum);
-
-        showCustomSnackBar("Deleted from Favorite");
-
-        context.read<CacheProvider>().initializeLists();
-      } else {
-        if (await HiveManager()
-            .addDataToBox<T>(data: widget.data, hiveEnum: widget.hiveEnum)) {
-          showCustomSnackBar("Added Favorite");
-
-          context.read<CacheProvider>().initializeLists();
-        }
-      }
-
-      changeIsHas();
-    } else {
-      showCustomSnackBar("Please connect internet to add favorite");
     }
     changeLoading();
   }

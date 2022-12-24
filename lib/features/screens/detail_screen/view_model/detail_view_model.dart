@@ -15,16 +15,22 @@ abstract class DetailViewModel extends State<DetailView> {
   void initState() {
     super.initState();
 
-    Future.microtask(() => initPage());
-
     _pookee = context.read<PookeeProvider>().pookee;
+
+    Future.microtask(() => initPage());
   }
 
-  initPage() {
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+
+  Future<void> initPage() async {
     context.read<PookeeProvider>().changePage(0);
   }
 
-  changePage(int index) {
+  void changePage(int index) {
     pageController.animateToPage(index,
         duration: context.durationLow, curve: Curves.ease);
     context.read<PookeeProvider>().changePage(index);

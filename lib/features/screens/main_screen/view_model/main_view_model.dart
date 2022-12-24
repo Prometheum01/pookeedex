@@ -13,6 +13,7 @@ abstract class MainViewModel extends State<MainView> {
     super.initState();
 
     pageController = PageController();
+
     context.read<MainScreenProvider>().setPageController(pageController);
 
     Future.microtask(

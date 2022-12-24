@@ -19,7 +19,7 @@ class _FavoriteButtonState<T> extends FavoriteButtonViewModel<T> {
     return IconButton(
       onPressed: () async {
         //Save T
-        await newClickButton();
+        await checkPermissionToClick();
       },
       icon: isLoading
           ? const CustomLoading()

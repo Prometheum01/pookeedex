@@ -42,20 +42,10 @@ class _ListTemplateState extends State<ListTemplate> {
           : widget.list.isEmpty
               ? Padding(
                   padding: const PaddingConst.mediumHorizontal(),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Lottie.asset(
-                        AssetConst.lostConnection,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: Text(
-                          "You should connect internet to view ${widget.type.name}.",
-                          textAlign: TextAlign.center,
-                        ),
-                      )
-                    ],
+                  child: AnimationWithText(
+                    animationPath: AssetConst.lostConnection,
+                    text:
+                        "You should connect internet to see ${widget.type.name}",
                   ),
                 )
               : ListView.separated(

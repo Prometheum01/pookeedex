@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+
 import 'package:kartal/kartal.dart';
-import 'package:pookeedex/core/constants/asset_const.dart';
+
 import 'package:pookeedex/core/constants/padding_const.dart';
 import 'package:pookeedex/core/enum/hive.dart';
 import 'package:pookeedex/features/screens/detail_screen/view_model/detail_view_model.dart';
