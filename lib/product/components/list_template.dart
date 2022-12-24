@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pookeedex/features/screens/no_internet_screen/view/no_internet_view.dart';
+import 'package:lottie/lottie.dart';
+import 'package:pookeedex/core/constants/asset_const.dart';
 
+import '../../core/constants/padding_const.dart';
 import '../../core/enum/list_enum.dart';
 import 'widgets.dart';
 
@@ -38,7 +40,24 @@ class _ListTemplateState extends State<ListTemplate> {
               child: CustomLoading(),
             )
           : widget.list.isEmpty
-              ? const NoInternetView()
+              ? Padding(
+                  padding: const PaddingConst.mediumHorizontal(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Lottie.asset(
+                        AssetConst.lostConnection,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: Text(
+                          "You should connect internet to view ${widget.type.name}.",
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    ],
+                  ),
+                )
               : ListView.separated(
                   controller: widget.scrollController,
                   itemCount: widget.isPaginateLoading
