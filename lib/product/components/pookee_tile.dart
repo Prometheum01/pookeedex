@@ -8,8 +8,6 @@ import 'package:pookeedex/product/components/widgets.dart';
 import 'package:pookeedex/product/model/pokemon.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/enum/hive.dart';
-
 class PookeeTile extends StatelessWidget {
   const PookeeTile({
     super.key,

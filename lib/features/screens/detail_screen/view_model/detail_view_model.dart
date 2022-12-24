@@ -9,28 +9,28 @@ import '../view/detail_view.dart';
 abstract class DetailViewModel extends State<DetailView> {
   late final Pokemon _pookee;
 
-  final PageController pageController = PageController();
+  final PageController pageController = PageController(initialPage: 0);
 
   @override
   void initState() {
     super.initState();
 
-    Future.microtask(() => initPage());
-
     _pookee = context.read<PookeeProvider>().pookee;
+
+    Future.microtask(() => initPage());
   }
 
-  initPage() {
-    pageController.jumpToPage(
-      selectedPage,
-    );
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 
-  clickDropIcon() {
-    Navigator.of(context).pop();
+  Future<void> initPage() async {
+    context.read<PookeeProvider>().changePage(0);
   }
 
-  changePage(int index) {
+  void changePage(int index) {
     pageController.animateToPage(index,
         duration: context.durationLow, curve: Curves.ease);
     context.read<PookeeProvider>().changePage(index);

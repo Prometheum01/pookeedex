@@ -19,33 +19,31 @@ class CacheProvider extends ChangeNotifier {
 
   //Functions
 
-  initializeLists() {
+  void initializeLists() {
     //If there is data from db it takes them
 
-    _pookeeList = hiveManager
-            .readDataFromBox<Pokemon>(HiveEnum.favorite_pokemon)
-            .isNotEmpty
-        ? hiveManager
-            .readDataFromBox<Pokemon>(HiveEnum.favorite_pokemon)
-            .values
-            .toList()
+    List<Pokemon> tempPokeList = hiveManager
+        .readDataFromBox<Pokemon>(HiveEnum.favorite_pokemon)
+        .values
+        .toList();
+
+    _pookeeList = tempPokeList.isNotEmpty
+        ? (_pookeeList == tempPokeList ? _pookeeList : tempPokeList)
         : [];
 
-    _moveList =
-        hiveManager.readDataFromBox<Move>(HiveEnum.favorite_moves).isNotEmpty
-            ? hiveManager
-                .readDataFromBox<Move>(HiveEnum.favorite_moves)
-                .values
-                .toList()
-            : [];
+    List<Move> tempMoveList = hiveManager
+        .readDataFromBox<Move>(HiveEnum.favorite_moves)
+        .values
+        .toList();
 
-    _itemList =
-        hiveManager.readDataFromBox<Item>(HiveEnum.favorite_items).isNotEmpty
-            ? hiveManager
-                .readDataFromBox<Item>(HiveEnum.favorite_items)
-                .values
-                .toList()
-            : [];
+    _moveList = tempMoveList.isNotEmpty ? tempMoveList : [];
+
+    List<Item> tempItemList = hiveManager
+        .readDataFromBox<Item>(HiveEnum.favorite_items)
+        .values
+        .toList();
+
+    _itemList = tempItemList.isNotEmpty ? tempItemList : [];
 
     notifyListeners();
   }

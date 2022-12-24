@@ -59,25 +59,32 @@ class MyApp extends StatelessWidget {
           return Column(
             children: [
               Expanded(child: child),
-              AnimatedOpacity(
-                duration: context.durationNormal,
-                opacity: context.watch<MainScreenProvider>().connection ==
+              Container(
+                color: Colors.redAccent,
+                width: double.infinity,
+                height: context.watch<MainScreenProvider>().connection ==
                         InternetConnectionStatus.connected
                     ? 0
-                    : 1,
-                child: Container(
-                  color: Colors.redAccent,
-                  width: double.infinity,
-                  height: context.watch<MainScreenProvider>().connection ==
-                          InternetConnectionStatus.connected
-                      ? 0
-                      : null,
-                  child: Center(
-                    child: Text(
-                      "There is no Internet Connection",
-                      style: context.textTheme.headline5
-                          ?.copyWith(color: Colors.white),
-                    ),
+                    : null,
+                child: Center(
+                  child: Text(
+                    "There is no Internet Connection",
+                    style: context.textTheme.headline5
+                        ?.copyWith(color: Colors.white),
+                  ),
+                ),
+              ),
+              Container(
+                color: Colors.blueAccent,
+                width: double.infinity,
+                height:
+                    context.watch<MainScreenProvider>().cacheLoading ? null : 0,
+                child: Center(
+                  child: Text(
+                    "Data caching for offline mode. Please don't close app.",
+                    textAlign: TextAlign.center,
+                    style: context.textTheme.headline5
+                        ?.copyWith(color: Colors.white),
                   ),
                 ),
               ),
@@ -87,7 +94,7 @@ class MyApp extends StatelessWidget {
         //TODO:ErrorWidget
         return Text("Error");
       },
-      initialRoute: NavigatorKeys.main.path,
+      initialRoute: NavigatorKeys.splash.path,
       routes: NavigatorService.navigatorKeys,
     );
   }

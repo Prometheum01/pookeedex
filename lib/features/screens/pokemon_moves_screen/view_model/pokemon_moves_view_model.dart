@@ -1,6 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
-
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:pookeedex/features/interface/i_list_model.dart';
 import 'package:pookeedex/features/screens/pokemon_moves_screen/view/pokemon_moves_view.dart';
 import 'package:provider/provider.dart';
@@ -17,26 +15,25 @@ abstract class PokemonMovesViewModel extends IListModel<PokemonMovesView> {
   void initState() {
     super.initState();
     context.read<PookeeProvider>().changeLoadingMoves(newState: true);
-    Future.microtask(
-      () => init(),
-    );
+
+    Future.microtask(() => loadMoves());
   }
 
-  init() async {
+  Future<void> loadMoves() async {
     pookee = context.read<PookeeProvider>().pookee;
-
     await checkInternet(
-      function: () async {
-        if (pookee.moves == null) {
-          context.read<PookeeProvider>().setMovesList(
-                await PookeeService().fetchPokemonMoves(
-                  id: pookee.id.toString(),
-                ),
-              );
-        }
-      },
-      errorWidget: const Text("There is no internet connection!"),
-    );
+        function: () async {
+          if (pookee.moves == null) {
+            context.read<PookeeProvider>().setMovesList(
+                  await PookeeService().fetchPokemonMoves(
+                    id: pookee.id.toString(),
+                  ),
+                );
+          }
+        },
+        errorWidget: const Text("There is no internet connection!"));
+
+    // ignore: use_build_context_synchronously
     context.read<PookeeProvider>().changeLoadingMoves();
   }
 
@@ -55,6 +52,7 @@ abstract class PokemonMovesViewModel extends IListModel<PokemonMovesView> {
           );
     }
 
+    // ignore: use_build_context_synchronously
     context.read<PookeeProvider>().changePaginateLoadingMoves();
   }
 

@@ -23,7 +23,7 @@ enum NavigatorKeys {
 }
 
 extension NavigatorExtension on NavigatorKeys {
-  get path => this == NavigatorKeys.main ? "/" : '/$name';
+  get path => this == NavigatorKeys.splash ? "/" : '/$name';
 }
 
 class NavigatorService {

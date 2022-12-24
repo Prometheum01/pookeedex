@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
+import 'package:lottie/lottie.dart';
+import 'package:pookeedex/core/constants/asset_const.dart';
 import 'package:pookeedex/core/constants/radius_const.dart';
 import 'package:pookeedex/product/model/pokemon.dart';
 
+import '../../../../core/constants/padding_const.dart';
+import '../../../../product/components/widgets.dart';
 import '../../../../product/model/evolve.dart';
 
 class EvolutionsView extends StatelessWidget {
@@ -14,14 +18,23 @@ class EvolutionsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: ListView.builder(
-        itemCount: pookee.evolve.evolves.length,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) => EvolveChainy(
-          evolve: pookee.evolve.evolves[index],
-          color: pookee.mainFirstColor,
-        ),
-      ),
+      body: pookee.evolve.evolvesTo == null
+          ? Padding(
+              padding: const PaddingConst.mediumHorizontal(),
+              child: AnimationWithText(
+                animationPath: AssetConst.emptyValues,
+                text: "${pookee.name.toTitleCase()} has not evolve chain.",
+                mainAxisAlignment: MainAxisAlignment.start,
+              ),
+            )
+          : ListView.builder(
+              itemCount: pookee.evolve.evolves.length,
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, index) => EvolveChainy(
+                evolve: pookee.evolve.evolves[index],
+                color: pookee.mainFirstColor,
+              ),
+            ),
     );
   }
 }

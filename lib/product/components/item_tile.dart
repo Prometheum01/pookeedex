@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:pookeedex/core/constants/color_const.dart';
 
-import '../../core/enum/hive.dart';
 import '../../core/services/navigator/navigator_service.dart';
 import '../model/item.dart';
 import 'widgets.dart';
