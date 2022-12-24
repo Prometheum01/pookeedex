@@ -38,3 +38,6 @@ An app for showing info about pokemons, their moves, and the items in the univer
 ![Move Detail Page](https://github.com/Prometheum01/pookeedex/blob/master/screenshots/move_detail.png)
 ![Item Detail Page](https://github.com/Prometheum01/pookeedex/blob/master/screenshots/item_detail.png)
 
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
+
