@@ -32,7 +32,9 @@ class _MainViewState extends MainViewModel {
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                   toolbarHeight: context.dynamicHeight(0.15),
-                  title: const SearchBar(),
+                  title: screenIndex == 3
+                      ? const FavoriteRow()
+                      : const SearchBar(),
                 ),
                 backgroundColor: Colors.transparent,
                 body: Column(

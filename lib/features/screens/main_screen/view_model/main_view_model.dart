@@ -20,4 +20,6 @@ abstract class MainViewModel extends State<MainView> {
   }
 
   bool get isLoading => context.watch<MainScreenProvider>().isLoadingMain;
+
+  int get screenIndex => context.watch<MainScreenProvider>().currentScreenIndex;
 }

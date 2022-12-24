@@ -9,7 +9,7 @@ import '../view/detail_view.dart';
 abstract class DetailViewModel extends State<DetailView> {
   late final Pokemon _pookee;
 
-  final PageController pageController = PageController();
+  final PageController pageController = PageController(initialPage: 0);
 
   @override
   void initState() {
@@ -21,13 +21,7 @@ abstract class DetailViewModel extends State<DetailView> {
   }
 
   initPage() {
-    pageController.jumpToPage(
-      selectedPage,
-    );
-  }
-
-  clickDropIcon() {
-    Navigator.of(context).pop();
+    context.read<PookeeProvider>().changePage(0);
   }
 
   changePage(int index) {

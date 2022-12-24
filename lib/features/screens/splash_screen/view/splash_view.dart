@@ -20,6 +20,7 @@ class _SplashViewState extends SplashViewModel {
           backgroundColor: Colors.white.withOpacity(0.8),
           body: Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: const [CustomLoading(), Text("Splash Screen :)")],
             ),
           ),

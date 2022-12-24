@@ -20,3 +20,5 @@ export 'package:pookeedex/product/components/item_tile.dart';
 export 'package:pookeedex/product/components/cost_widget.dart';
 export 'package:pookeedex/product/components/favorite_button/view/favorite_button_view.dart';
 export 'package:pookeedex/product/components/cached_image.dart';
+export 'package:pookeedex/product/components/favorite_tab_button.dart';
+export 'package:pookeedex/product/components/favorite_row.dart';

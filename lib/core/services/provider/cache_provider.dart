@@ -27,8 +27,6 @@ class CacheProvider extends ChangeNotifier {
         .values
         .toList();
 
-    print(_pookeeList == tempPokeList);
-
     _pookeeList = tempPokeList.isNotEmpty
         ? (_pookeeList == tempPokeList ? _pookeeList : tempPokeList)
         : [];
@@ -38,16 +36,12 @@ class CacheProvider extends ChangeNotifier {
         .values
         .toList();
 
-    print(_moveList == tempMoveList);
-
     _moveList = tempMoveList.isNotEmpty ? tempMoveList : [];
 
     List<Item> tempItemList = hiveManager
         .readDataFromBox<Item>(HiveEnum.favorite_items)
         .values
         .toList();
-
-    print(_itemList == tempItemList);
 
     _itemList = tempItemList.isNotEmpty ? tempItemList : [];
 

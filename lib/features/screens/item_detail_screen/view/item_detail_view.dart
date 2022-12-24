@@ -14,66 +14,83 @@ class ItemDetailView extends StatelessWidget {
     final Item item =
         (ModalRoute.of(context)?.settings.arguments as Map)['item'];
 
-    return Stack(
-      children: [
-        const MainGradient(),
-        Container(
-          color: Colors.white.withOpacity(0.6),
-        ),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            actions: [
-              FavoriteButton<Item>(
-                  data: item, hiveEnum: HiveEnum.favorite_items),
-            ],
+    return SafeArea(
+      child: Stack(
+        children: [
+          const MainGradient(),
+          Container(
+            color: Colors.white.withOpacity(0.6),
           ),
-          body: ListView(
-            physics: const BouncingScrollPhysics(),
-            children: [
-              PageBackground(
-                height: context.dynamicHeight(1),
-                backgroundPaddingFromTop: context.dynamicHeight(0.15),
-                childPaddingFromTop: context.dynamicHeight(0.05),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: context.dynamicHeight(
-                        0.2,
-                      ),
-                      width: context.dynamicHeight(
-                        0.2,
-                      ),
-                      child: CachedItemImage(item: item),
-                    ),
-                    Padding(
-                      padding: const PaddingConst.largeVertical(),
-                      child: Text(
-                        item.name,
-                        style: context.textTheme.headline4,
-                      ),
-                    ),
-                    CostWidget(
-                        cost: item.cost,
-                        color: ColorConst.lowTextColor,
-                        align: MainAxisAlignment.center),
-                    Padding(
-                      padding: const PaddingConst.largeVertical(),
-                      child: Text(
-                        item.description,
-                        textAlign: TextAlign.center,
-                        style: context.textTheme.headline5,
-                      ),
-                    ),
-                  ],
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Transform.rotate(
+              angle: 0,
+              child: SizedBox(
+                height: context.dynamicHeight(0.5),
+                child: CachedItemImage(
+                  item: item,
+                  color: Colors.white.withOpacity(0.25),
                 ),
-              )
-            ],
+              ),
+            ),
           ),
-        )
-      ],
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              actions: [
+                FavoriteButton<Item>(
+                    data: item, hiveEnum: HiveEnum.favorite_items),
+              ],
+            ),
+            body: ListView(
+              physics: const BouncingScrollPhysics(),
+              children: [
+                PageBackground(
+                  height: context.dynamicHeight(1),
+                  backgroundPaddingFromTop: context.dynamicHeight(0.2),
+                  childPaddingFromTop: context.dynamicHeight(0.1),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: context.dynamicHeight(
+                          0.2,
+                        ),
+                        width: context.dynamicHeight(
+                          0.2,
+                        ),
+                        child: CachedItemImage(item: item),
+                      ),
+                      Padding(
+                        padding: const PaddingConst.largeVertical(),
+                        child: Text(
+                          item.name,
+                          style: context.textTheme.headline4,
+                        ),
+                      ),
+                      CostWidget(
+                          cost: item.cost,
+                          color: ColorConst.lowTextColor,
+                          align: MainAxisAlignment.center),
+                      Padding(
+                        padding: const PaddingConst.largeVertical(),
+                        child: Text(
+                          item.description,
+                          textAlign: TextAlign.center,
+                          style: context.textTheme.headline5,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

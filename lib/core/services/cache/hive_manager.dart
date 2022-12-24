@@ -18,7 +18,6 @@ class HiveManager extends IHaveManager {
     switch (T) {
       case Pokemon:
         for (Pokemon temp in data as List<Pokemon>) {
-          print(temp.name);
           if (checkDataInBox<Pokemon>(data: temp, hiveEnum: hiveEnum)) {
             if (temp.cacheImageToken == null) {
               if (await NetworkConnectivity().checkNetworkConnectivity() ==
@@ -30,11 +29,19 @@ class HiveManager extends IHaveManager {
                         image: temp.image,
                         id: temp.id.toString(),
                         hiveEnum: hiveEnum);
+
+                var index = box.values.toList().cast<Pokemon>().indexOf(temp);
+
                 temp.cacheImageToken = path;
+
+                await box.putAt(index, temp as T);
               }
-              box.add(temp as T);
+            } else {
+              break;
             }
           } else {
+            box.add(temp as T);
+
             if (await NetworkConnectivity().checkNetworkConnectivity() ==
                 InternetConnectionStatus.disconnected) {
               print("There is no Internet");
@@ -43,9 +50,13 @@ class HiveManager extends IHaveManager {
                   image: temp.image,
                   id: temp.id.toString(),
                   hiveEnum: hiveEnum);
+
+              var index = box.values.toList().cast<Pokemon>().indexOf(temp);
+
               temp.cacheImageToken = path;
+
+              await box.putAt(index, temp as T);
             }
-            box.add(temp as T);
           }
         }
 
@@ -71,11 +82,19 @@ class HiveManager extends IHaveManager {
                         image: temp.image,
                         id: temp.id.toString(),
                         hiveEnum: hiveEnum);
+
+                var index = box.values.toList().cast<Item>().indexOf(temp);
+
                 temp.cacheImageToken = path;
-                box.add(temp as T);
+
+                await box.putAt(index, temp as T);
               }
+            } else {
+              break;
             }
           } else {
+            box.add(temp as T);
+
             if (await NetworkConnectivity().checkNetworkConnectivity() ==
                 InternetConnectionStatus.disconnected) {
               print("There is no Internet");
@@ -84,9 +103,13 @@ class HiveManager extends IHaveManager {
                   image: temp.image,
                   id: temp.id.toString(),
                   hiveEnum: hiveEnum);
+
+              var index = box.values.toList().cast<Item>().indexOf(temp);
+
               temp.cacheImageToken = path;
+
+              await box.putAt(index, temp as T);
             }
-            box.add(temp as T);
           }
         }
         break;
