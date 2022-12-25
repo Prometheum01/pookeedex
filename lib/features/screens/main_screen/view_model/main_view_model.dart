@@ -17,7 +17,8 @@ abstract class MainViewModel extends State<MainView> {
     context.read<MainScreenProvider>().setPageController(pageController);
 
     Future.microtask(
-        () => context.read<MainScreenProvider>().cacheInitialValues());
+      () => context.read<MainScreenProvider>().cacheInitialValues(),
+    );
   }
 
   bool get isLoading => context.watch<MainScreenProvider>().isLoadingMain;

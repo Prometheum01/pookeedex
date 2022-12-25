@@ -29,8 +29,6 @@ class _MainViewState extends MainViewModel {
               )
             : Scaffold(
                 appBar: AppBar(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
                   toolbarHeight: context.dynamicHeight(0.15),
                   title: screenIndex == 3
                       ? const FavoriteRow()

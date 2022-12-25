@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pookeedex/product/model/move.dart';
+import 'package:pookeedex/product/model/pokemon.dart';
 
 import '../../core/constants/asset_const.dart';
 import '../../core/constants/padding_const.dart';
 import '../../core/enum/list_enum.dart';
+import '../model/item.dart';
 import 'widgets.dart';
 
 class FavoriteListTemplate extends StatelessWidget {
@@ -44,11 +47,20 @@ class FavoriteListTemplate extends StatelessWidget {
             itemBuilder: (context, index) {
               switch (type) {
                 case ListType.pokemon:
-                  return PookeeTile(pokemon: list[index]);
+                  return PookeeTile<Pokemon>(
+                    pokemon: list[index],
+                    isFavorite: true,
+                  );
                 case ListType.moves:
-                  return MovesTile(move: list[index]);
+                  return MoveTileView<Move>(
+                    move: list[index],
+                    isFavorite: true,
+                  );
                 case ListType.items:
-                  return ItemTile(item: list[index]);
+                  return ItemTileView<Item>(
+                    item: list[index],
+                    isFavorite: true,
+                  );
                 default:
                   return const Text("Null");
               }

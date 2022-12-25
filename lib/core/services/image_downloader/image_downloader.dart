@@ -22,13 +22,15 @@ class ImageDownloaderCache extends IImageDownloader {
       }
       return null;
     } catch (e) {
-      print("Image Download error");
       return null;
     }
   }
 
   @override
   removeImageFromCache({required String path}) async {
-    await File(path).delete();
+    print(File(path).existsSync());
+    if (File(path).existsSync()) {
+      await File(path).delete();
+    }
   }
 }

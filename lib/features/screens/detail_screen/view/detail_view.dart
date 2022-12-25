@@ -44,7 +44,6 @@ class _DetailViewState extends DetailViewModel {
             backgroundColor: Colors.transparent,
             appBar: _appBar(),
             body: ListView(
-              physics: const BouncingScrollPhysics(),
               children: [
                 PageBackground(
                   height: context.dynamicHeight(1.5),
@@ -124,8 +123,6 @@ class _DetailViewState extends DetailViewModel {
 
   AppBar _appBar() {
     return AppBar(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
       title: Text(
         pookee.name.toTitleCase(),
         style: context.textTheme.headline5?.copyWith(
@@ -136,7 +133,11 @@ class _DetailViewState extends DetailViewModel {
         FavoriteButton<Pokemon>(
             data: pookee, hiveEnum: HiveEnum.favorite_pokemon),
       ],
-      centerTitle: true,
+      leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(Icons.arrow_back)),
     );
   }
 }

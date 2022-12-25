@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kartal/kartal.dart';
-import 'package:pookeedex/core/constants/asset_const.dart';
 import 'package:pookeedex/core/constants/padding_const.dart';
 import 'package:pookeedex/product/components/widgets.dart';
 import 'package:pookeedex/product/constants/nature_constants.dart';
@@ -42,16 +41,12 @@ class MovesDetailView extends StatelessWidget {
           Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
-              elevation: 0,
-              backgroundColor: Colors.transparent,
               actions: [
                 FavoriteButton<Move>(
                     data: move, hiveEnum: HiveEnum.favorite_moves),
               ],
-              centerTitle: true,
             ),
             body: ListView(
-              physics: const BouncingScrollPhysics(),
               children: [
                 PageBackground(
                   height: context.dynamicHeight(1),

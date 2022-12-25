@@ -19,12 +19,15 @@ class _FavoriteButtonState<T> extends FavoriteButtonViewModel<T> {
     return IconButton(
       onPressed: () async {
         //Save T
-        await checkPermissionToClick();
+        await checkPermissionToClick(
+            data: widget.data, hiveEnum: widget.hiveEnum);
       },
       icon: isLoading
           ? const CustomLoading()
           : Icon(
-              isHas ? Icons.favorite : Icons.favorite_border,
+              isHas<T>(data: widget.data)
+                  ? Icons.favorite
+                  : Icons.favorite_border,
             ),
     );
   }

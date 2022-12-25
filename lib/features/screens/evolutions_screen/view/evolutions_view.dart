@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pookeedex/core/constants/asset_const.dart';
 import 'package:pookeedex/core/constants/radius_const.dart';
+import 'package:pookeedex/core/enum/hive.dart';
+import 'package:pookeedex/core/services/cache/hive_manager.dart';
+import 'package:pookeedex/core/services/navigator/navigator_service.dart';
+import 'package:pookeedex/core/services/provider/pookee_provider.dart';
 import 'package:pookeedex/product/model/pokemon.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/constants/padding_const.dart';
 import '../../../../product/components/widgets.dart';
@@ -97,53 +101,53 @@ class EvolveChainy extends StatelessWidget {
     );
   }
 
-  SizedBox _imageWithText(BuildContext context, Evolve evolve) {
-    return SizedBox(
-      width: context.dynamicWidth(0.25),
-      height: context.dynamicHeight(0.25),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.network(evolve.image),
-          Text(
-            evolve.name.toTitleCase(),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class CreateArrow extends StatelessWidget {
-  const CreateArrow({
-    Key? key,
-    required this.height,
-    required this.color,
-  }) : super(key: key);
-
-  final double height;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _halfArrow(45),
-        _halfArrow(-45),
-      ],
-    );
+  Pokemon? searchPookee(Evolve evolve) {
+    for (Pokemon tmp in HiveManager()
+        .readDataFromBox<Pokemon>(HiveEnum.favorite_pokemon)
+        .values
+        .toList()) {
+      if (tmp.name == evolve.name) {
+        return tmp;
+      }
+    }
+    return null;
   }
 
-  Transform _halfArrow(double angle) {
-    return Transform.rotate(
-      angle: angle,
-      child: Container(
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: const RadiusConst.allBig(),
+  Widget _imageWithText(BuildContext context, Evolve evolve) {
+    return InkWell(
+      onTap: () {
+        Pokemon? tmpPookee = searchPookee(evolve);
+        if (tmpPookee != null) {
+          if (context.read<PookeeProvider>().pookee != tmpPookee) {
+            context.read<PookeeProvider>().setPookee(tmpPookee);
+            Navigator.of(context).pushNamed(NavigatorKeys.detail.path);
+          }
+        }
+      },
+      child: Ink(
+        width: context.dynamicWidth(0.25),
+        height: context.dynamicHeight(0.25),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            searchPookee(evolve) != null
+                ? CachedPokemonImage(
+                    pookee: searchPookee(evolve)!,
+                  )
+                : Image.network(
+                    evolve.image,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Text(
+                        "This pokemon is not in the cache",
+                        textAlign: TextAlign.center,
+                      );
+                    },
+                  ),
+            Text(
+              evolve.name.toTitleCase(),
+            ),
+          ],
         ),
-        height: height,
-        width: height * 2,
       ),
     );
   }

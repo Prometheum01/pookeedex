@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pookeedex/core/constants/asset_const.dart';
+import 'package:pookeedex/product/model/item.dart';
+import 'package:pookeedex/product/model/pokemon.dart';
 
 import '../../core/constants/padding_const.dart';
 import '../../core/enum/list_enum.dart';
+import '../model/move.dart';
 import 'widgets.dart';
 
 class ListTemplate extends StatefulWidget {
@@ -63,11 +65,12 @@ class _ListTemplateState extends State<ListTemplate> {
                     if (index < widget.list.length) {
                       switch (widget.type) {
                         case ListType.pokemon:
-                          return PookeeTile(pokemon: widget.list[index]);
+                          return PookeeTile<Pokemon>(
+                              pokemon: widget.list[index]);
                         case ListType.moves:
-                          return MovesTile(move: widget.list[index]);
+                          return MoveTileView<Move>(move: widget.list[index]);
                         case ListType.items:
-                          return ItemTile(item: widget.list[index]);
+                          return ItemTileView<Item>(item: widget.list[index]);
                         default:
                           return const Text("Null");
                       }

@@ -6,6 +6,7 @@ import 'i_network_connectivity.dart';
 
 class NetworkConnectivity extends NetworkConnectivityInterface {
   late final InternetConnectionChecker _checker;
+
   StreamSubscription<InternetConnectionStatus>? _subscription;
 
   NetworkConnectivity() {

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:pookeedex/core/extensions/string_extension.dart';
+import 'package:pookeedex/core/services/provider/cache_provider.dart';
 import 'package:pookeedex/product/components/widgets.dart';
 import 'package:pookeedex/product/model/item.dart';
 import 'package:pookeedex/product/model/pokemon.dart';
@@ -37,9 +38,27 @@ class _SearchBarState extends State<SearchBar> {
           //Pokemon
 
           _showLoading();
+          Pokemon? pookee;
 
-          Pokemon? pookee = await PookeeService().fetchPokemon(
-              searchController.text.trim().toLowerCase().toString());
+          for (Pokemon tmpP in context.read<CacheProvider>().pookeeList) {
+            if (tmpP.name.trim().toLowerCase() ==
+                searchController.text.trim().toLowerCase().toJsonText) {
+              pookee = tmpP;
+            }
+          }
+
+          try {
+            pookee ??= await PookeeService().fetchPokemon(
+                searchController.text.trim().toLowerCase().toString());
+          } catch (_) {
+            Navigator.of(context).pop();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Somethings get wrong please try again later"),
+              ),
+            );
+            break;
+          }
 
           if (pookee == null) {
             Navigator.of(context).pop();
@@ -61,9 +80,27 @@ class _SearchBarState extends State<SearchBar> {
           //Moves
           _showLoading();
 
-          Move? move = await PookeeService().fetchMove(
-            searchController.text.trim().toJsonText,
-          );
+          Move? move;
+
+          for (Move tmpM in context.read<CacheProvider>().moveList) {
+            print(tmpM.name);
+            if (tmpM.name.trim().toLowerCase() ==
+                searchController.text.trim().toLowerCase().toJsonText) {
+              move = tmpM;
+            }
+          }
+          try {
+            move ??= await PookeeService().fetchMove(
+                searchController.text.trim().toLowerCase().toString());
+          } catch (_) {
+            Navigator.of(context).pop();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Somethings get wrong please try again later"),
+              ),
+            );
+            break;
+          }
 
           if (move == null) {
             Navigator.of(context).pop();
@@ -84,9 +121,30 @@ class _SearchBarState extends State<SearchBar> {
           //Items
           _showLoading();
 
-          Item? item = await PookeeService().fetchItem(
-            searchController.text.trim().toJsonText,
-          );
+          Item? item;
+
+          for (Item tmpI in context.read<CacheProvider>().itemList) {
+            if (tmpI.name.trim().toLowerCase() ==
+                searchController.text.trim().toLowerCase()) {
+              item = tmpI;
+            }
+          }
+
+          try {
+            item ??= await PookeeService().fetchItem(searchController.text
+                .trim()
+                .toLowerCase()
+                .toString()
+                .toJsonText);
+          } catch (_) {
+            Navigator.of(context).pop();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Somethings get wrong please try again later"),
+              ),
+            );
+            break;
+          }
 
           if (item == null) {
             Navigator.of(context).pop();
@@ -164,7 +222,7 @@ class _SearchBarState extends State<SearchBar> {
                   function: () async {
                     await search();
                   }),
-              suffixIcon: _TextFieldButton(icon: Icons.mic, function: () {}),
+              //suffixIcon: _TextFieldButton(icon: Icons.mic, function: () {}),
             ),
           ),
         ),

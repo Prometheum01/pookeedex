@@ -38,6 +38,8 @@ abstract class IHaveManager<T> {
     Hive.registerAdapter(PokemonAdapter());
     Hive.registerAdapter(StatAdapter());
 
+    await Hive.openBox<bool>('onboard');
+
     await Hive.openBox<Pokemon>(HiveEnum.favorite_pokemon.name);
     await Hive.openBox<Move>(HiveEnum.favorite_moves.name);
     await Hive.openBox<Item>(HiveEnum.favorite_items.name);
