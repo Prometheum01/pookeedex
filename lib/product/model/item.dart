@@ -51,6 +51,11 @@ class Item extends Equatable {
       Item(name: "Null", cost: "0", image: "", description: "Null", id: -1);
 
   @override
-  List<Object?> props() =>
-      [name, cost, image, description, id, cacheImageToken];
+  List<Object?> props() => [
+        name,
+        cost,
+        image,
+        description,
+        id,
+      ];
 }

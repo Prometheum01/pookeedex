@@ -41,17 +41,8 @@ class MovesDetailView extends StatelessWidget {
           ),
           Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: AppBar(
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              actions: [
-                FavoriteButton<Move>(
-                    data: move, hiveEnum: HiveEnum.favorite_moves),
-              ],
-              centerTitle: true,
-            ),
+            appBar: AppBar(),
             body: ListView(
-              physics: const BouncingScrollPhysics(),
               children: [
                 PageBackground(
                   height: context.dynamicHeight(1),

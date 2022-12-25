@@ -186,18 +186,20 @@ class HiveManager extends IHaveManager {
       bool deleteImage = true}) async {
     Box<T> box = Hive.box(hiveEnum.name);
 
+    T value = box.values.toList()[box.values.toList().indexOf(data)];
+
     if (deleteImage) {
-      if (data is Pokemon) {
-        if (data.id > 10) {
+      if (value is Pokemon) {
+        if (value.id > 10) {
           //Initial images not deleted
           await ImageDownloaderCache()
-              .removeImageFromCache(path: data.cacheImageToken!);
+              .removeImageFromCache(path: value.cacheImageToken!);
         }
-      } else if (data is Item) {
-        if (data.id > 10) {
+      } else if (value is Item) {
+        if (value.id > 10) {
           //Initial images not deleted
           await ImageDownloaderCache()
-              .removeImageFromCache(path: data.cacheImageToken!);
+              .removeImageFromCache(path: value.cacheImageToken!);
         }
       }
     }

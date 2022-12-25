@@ -53,6 +53,11 @@ class MyApp extends StatelessWidget {
             color: ColorConst.textColor,
           ),
         ),
+        appBarTheme: const AppBarTheme(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          centerTitle: true,
+        ),
       ),
       builder: (context, child) {
         if (child != null) {

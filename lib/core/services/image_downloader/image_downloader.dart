@@ -29,6 +29,8 @@ class ImageDownloaderCache extends IImageDownloader {
 
   @override
   removeImageFromCache({required String path}) async {
-    await File(path).delete();
+    if (File(path).existsSync()) {
+      await File(path).delete();
+    }
   }
 }

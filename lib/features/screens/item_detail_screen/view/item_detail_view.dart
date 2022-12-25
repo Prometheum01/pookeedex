@@ -38,16 +38,8 @@ class ItemDetailView extends StatelessWidget {
           ),
           Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              actions: [
-                FavoriteButton<Item>(
-                    data: item, hiveEnum: HiveEnum.favorite_items),
-              ],
-            ),
+            appBar: AppBar(),
             body: ListView(
-              physics: const BouncingScrollPhysics(),
               children: [
                 PageBackground(
                   height: context.dynamicHeight(1),

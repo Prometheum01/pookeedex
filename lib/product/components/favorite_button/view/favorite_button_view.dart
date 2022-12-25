@@ -19,7 +19,8 @@ class _FavoriteButtonState<T> extends FavoriteButtonViewModel<T> {
     return IconButton(
       onPressed: () async {
         //Save T
-        await checkPermissionToClick();
+        await checkPermissionToClick(
+            data: widget.data, hiveEnum: widget.hiveEnum);
       },
       icon: isLoading
           ? const CustomLoading()

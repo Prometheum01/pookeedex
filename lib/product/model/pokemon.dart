@@ -144,6 +144,5 @@ class Pokemon extends Equatable {
         breeding,
         capture,
         evolve,
-        cacheImageToken
       ];
 }

@@ -304,8 +304,6 @@ class MainScreenProvider extends ChangeNotifier {
 
   List<Item> get loadedItemList => _loadedItemList;
 
-  PageController get pageController => _pageController;
-
   InternetConnectionStatus get connection =>
       _connection ?? InternetConnectionStatus.disconnected;
 
