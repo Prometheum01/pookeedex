@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:pookeedex/core/extensions/string_extension.dart';
+import 'package:pookeedex/core/services/provider/cache_provider.dart';
 import 'package:pookeedex/product/components/widgets.dart';
 import 'package:pookeedex/product/model/item.dart';
 import 'package:pookeedex/product/model/pokemon.dart';
@@ -38,8 +39,16 @@ class _SearchBarState extends State<SearchBar> {
 
           _showLoading();
           Pokemon? pookee;
+
+          for (Pokemon tmpP in context.read<CacheProvider>().pookeeList) {
+            if (tmpP.name.trim().toLowerCase() ==
+                searchController.text.trim().toLowerCase().toJsonText) {
+              pookee = tmpP;
+            }
+          }
+
           try {
-            pookee = await PookeeService().fetchPokemon(
+            pookee ??= await PookeeService().fetchPokemon(
                 searchController.text.trim().toLowerCase().toString());
           } catch (_) {
             Navigator.of(context).pop();
@@ -72,10 +81,17 @@ class _SearchBarState extends State<SearchBar> {
           _showLoading();
 
           Move? move;
+
+          for (Move tmpM in context.read<CacheProvider>().moveList) {
+            print(tmpM.name);
+            if (tmpM.name.trim().toLowerCase() ==
+                searchController.text.trim().toLowerCase().toJsonText) {
+              move = tmpM;
+            }
+          }
           try {
-            move = await PookeeService().fetchMove(
-              searchController.text.trim().toJsonText,
-            );
+            move ??= await PookeeService().fetchMove(
+                searchController.text.trim().toLowerCase().toString());
           } catch (_) {
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context).showSnackBar(
@@ -106,10 +122,20 @@ class _SearchBarState extends State<SearchBar> {
           _showLoading();
 
           Item? item;
+
+          for (Item tmpI in context.read<CacheProvider>().itemList) {
+            if (tmpI.name.trim().toLowerCase() ==
+                searchController.text.trim().toLowerCase()) {
+              item = tmpI;
+            }
+          }
+
           try {
-            item = await PookeeService().fetchItem(
-              searchController.text.trim().toJsonText,
-            );
+            item ??= await PookeeService().fetchItem(searchController.text
+                .trim()
+                .toLowerCase()
+                .toString()
+                .toJsonText);
           } catch (_) {
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context).showSnackBar(
