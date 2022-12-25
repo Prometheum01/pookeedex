@@ -22,6 +22,12 @@ An app for showing info about pokemons, their moves, and the items in the univer
 
 - [PokeApi.co](https://pokeapi.co/)
 
+## Design
+
+- I used this design but i changed something.
+
+- [iOS Pokedex App](https://www.uplabs.com/posts/ios-pokedex-app)
+
 ## Screenshots
 
 ![Loading Page](https://github.com/Prometheum01/pookeedex/blob/master/screenshots/loading.png)
