@@ -6,6 +6,7 @@ import 'package:pookeedex/features/screens/detail_screen/view/detail_view.dart';
 import 'package:pookeedex/features/screens/favorite_screen/view/favorite_view.dart';
 import 'package:pookeedex/features/screens/home_screen/view/home_view.dart';
 import 'package:pookeedex/features/screens/main_screen/view/main_view.dart';
+import 'package:pookeedex/features/screens/onboard_screen/view/onboard_view.dart';
 import 'package:pookeedex/features/screens/splash_screen/view/splash_view.dart';
 
 import '../../../features/screens/item_detail_screen/view/item_detail_view.dart';
@@ -20,10 +21,11 @@ enum NavigatorKeys {
   item_detail,
   favorite,
   splash,
+  onboard,
 }
 
 extension NavigatorExtension on NavigatorKeys {
-  get path => this == NavigatorKeys.splash ? "/" : '/$name';
+  get path => '/$name';
 }
 
 class NavigatorService {
@@ -36,5 +38,6 @@ class NavigatorService {
     NavigatorKeys.moves_detail.path: (context) => const MovesDetailView(),
     NavigatorKeys.item_detail.path: (context) => const ItemDetailView(),
     NavigatorKeys.favorite.path: (context) => const FavoriteView(),
+    NavigatorKeys.onboard.path: (context) => const OnboardView(),
   };
 }

@@ -21,7 +21,10 @@ class _SplashViewState extends SplashViewModel {
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [CustomLoading(), Text("Splash Screen :)")],
+              children: const [
+                CustomLoading(),
+                Text("We are getting data from The Cinnabar Lab...")
+              ],
             ),
           ),
         ),

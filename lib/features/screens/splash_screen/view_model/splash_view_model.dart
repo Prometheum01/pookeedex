@@ -62,60 +62,6 @@ abstract class SplashViewModel extends State<SplashView> {
     );
   }
 
-  /*
-  Future<void> wantPermission() async {
-    await PermissionManager().askStoragePermission(
-      denialFunction: () async {
-        //Get data from api, but not caching
-
-        await context.read<MainScreenProvider>().checkAndFetchInitialList();
-
-        goMainPage();
-      },
-      acceptFunction: () async {
-        //Get data from api, and cache
-        await context.read<MainScreenProvider>().checkAndFetchInitialList();
-
-        goMainPage();
-      },
-      acceptedBeforeFunction: () async {
-        //Get data from api, and initialize favorite data
-        await context.read<MainScreenProvider>().checkAndFetchInitialList();
-
-        // ignore: use_build_context_synchronously
-        context.read<CacheProvider>().initializeLists();
-
-        goMainPage();
-      },
-    );
-  }
-*/
-  /*
-  wantPermission() async {
-    if (!(await Permission.storage.isGranted)) {
-      PermissionStatus status = await Permission.storage.request();
-
-      if (!status.isGranted) {
-        exit(0);
-      } else {
-        //First opening
-        // ignore: use_build_context_synchronously
-        await context.read<MainScreenProvider>().checkAndFetchInitialList();
-
-        goMainPage();
-        //Cache initial data
-
-      }
-    } else {
-      await context.read<MainScreenProvider>().checkAndFetchInitialList();
-
-      // ignore: use_build_context_synchronously
-      context.read<CacheProvider>().initializeLists();
-
-      goMainPage();
-    }
-  }
-*/
   goMainPage() {
     Navigator.of(context).pushReplacementNamed(NavigatorKeys.main.path);
   }

@@ -4,7 +4,10 @@ import 'package:pookeedex/core/constants/asset_const.dart';
 import 'package:pookeedex/core/constants/radius_const.dart';
 import 'package:pookeedex/core/enum/hive.dart';
 import 'package:pookeedex/core/services/cache/hive_manager.dart';
+import 'package:pookeedex/core/services/navigator/navigator_service.dart';
+import 'package:pookeedex/core/services/provider/pookee_provider.dart';
 import 'package:pookeedex/product/model/pokemon.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/constants/padding_const.dart';
 import '../../../../product/components/widgets.dart';
@@ -110,30 +113,41 @@ class EvolveChainy extends StatelessWidget {
     return null;
   }
 
-  SizedBox _imageWithText(BuildContext context, Evolve evolve) {
-    return SizedBox(
-      width: context.dynamicWidth(0.25),
-      height: context.dynamicHeight(0.25),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          searchPookee(evolve) != null
-              ? CachedPokemonImage(
-                  pookee: searchPookee(evolve)!,
-                )
-              : Image.network(
-                  evolve.image,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Text(
-                      "This pokemon is not in the cache",
-                      textAlign: TextAlign.center,
-                    );
-                  },
-                ),
-          Text(
-            evolve.name.toTitleCase(),
-          ),
-        ],
+  Widget _imageWithText(BuildContext context, Evolve evolve) {
+    return InkWell(
+      onTap: () {
+        Pokemon? tmpPookee = searchPookee(evolve);
+        if (tmpPookee != null) {
+          if (context.read<PookeeProvider>().pookee != tmpPookee) {
+            context.read<PookeeProvider>().setPookee(tmpPookee);
+            Navigator.of(context).pushNamed(NavigatorKeys.detail.path);
+          }
+        }
+      },
+      child: Ink(
+        width: context.dynamicWidth(0.25),
+        height: context.dynamicHeight(0.25),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            searchPookee(evolve) != null
+                ? CachedPokemonImage(
+                    pookee: searchPookee(evolve)!,
+                  )
+                : Image.network(
+                    evolve.image,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Text(
+                        "This pokemon is not in the cache",
+                        textAlign: TextAlign.center,
+                      );
+                    },
+                  ),
+            Text(
+              evolve.name.toTitleCase(),
+            ),
+          ],
+        ),
       ),
     );
   }

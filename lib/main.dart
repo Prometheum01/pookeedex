@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:kartal/kartal.dart';
 import 'package:pookeedex/core/constants/color_const.dart';
 import 'package:pookeedex/core/services/cache/hive_manager.dart';
 import 'package:pookeedex/core/services/navigator/navigator_service.dart';
 import 'package:pookeedex/core/services/provider/main_screen_provider.dart';
+import 'package:pookeedex/core/services/provider/network_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'core/services/provider/cache_provider.dart';
@@ -25,6 +27,9 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => CacheProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => NetworkProvider(),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -36,8 +41,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<MainScreenProvider>().listenConnection();
     return MaterialApp(
       title: 'Pookeedex',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: TextTheme(
           headline3: context.textTheme.headline3?.copyWith(
@@ -99,7 +106,9 @@ class MyApp extends StatelessWidget {
         //TODO:ErrorWidget
         return Text("Error");
       },
-      initialRoute: NavigatorKeys.splash.path,
+      initialRoute: Hive.box<bool>("onboard").values.isEmpty
+          ? NavigatorKeys.onboard.path
+          : NavigatorKeys.splash.path,
       routes: NavigatorService.navigatorKeys,
     );
   }
