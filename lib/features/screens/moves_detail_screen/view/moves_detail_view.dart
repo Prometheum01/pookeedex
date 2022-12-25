@@ -5,6 +5,7 @@ import 'package:pookeedex/core/constants/padding_const.dart';
 import 'package:pookeedex/product/components/widgets.dart';
 import 'package:pookeedex/product/constants/nature_constants.dart';
 
+import '../../../../core/enum/hive.dart';
 import '../../../../product/model/move.dart';
 import '../../../../product/model/nature.dart';
 
@@ -39,7 +40,12 @@ class MovesDetailView extends StatelessWidget {
           ),
           Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: AppBar(),
+            appBar: AppBar(
+              actions: [
+                FavoriteButton<Move>(
+                    data: move, hiveEnum: HiveEnum.favorite_moves),
+              ],
+            ),
             body: ListView(
               children: [
                 PageBackground(

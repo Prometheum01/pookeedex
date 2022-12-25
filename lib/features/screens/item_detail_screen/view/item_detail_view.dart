@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:pookeedex/core/constants/color_const.dart';
 import 'package:pookeedex/core/constants/padding_const.dart';
-import 'package:pookeedex/core/enum/hive.dart';
 import 'package:pookeedex/product/components/widgets.dart';
 import 'package:pookeedex/product/model/item.dart';
+
+import '../../../../core/enum/hive.dart';
 
 class ItemDetailView extends StatelessWidget {
   const ItemDetailView({super.key});
@@ -38,7 +39,12 @@ class ItemDetailView extends StatelessWidget {
           ),
           Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: AppBar(),
+            appBar: AppBar(
+              actions: [
+                FavoriteButton<Item>(
+                    data: item, hiveEnum: HiveEnum.favorite_items),
+              ],
+            ),
             body: ListView(
               children: [
                 PageBackground(

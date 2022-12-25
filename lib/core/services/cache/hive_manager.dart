@@ -193,7 +193,7 @@ class HiveManager extends IHaveManager {
         if (value.id > 10) {
           //Initial images not deleted
           await ImageDownloaderCache()
-              .removeImageFromCache(path: value.cacheImageToken!);
+              .removeImageFromCache(path: value.cacheImageToken.toString());
         }
       } else if (value is Item) {
         if (value.id > 10) {

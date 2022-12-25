@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:pookeedex/product/components/move_tile/view_model/move_tile_view_model.dart';
 import 'package:pookeedex/product/components/widgets.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../core/services/provider/cache_provider.dart';
 import '../../../constants/nature_constants.dart';
 import '../../../model/move.dart';
 
@@ -39,7 +41,10 @@ class _MoveTileViewState<T> extends MoveTileViewModel<T> {
         decoration: !widget.isFavorite
             ? BoxDecoration(
                 gradient: LinearGradient(
-                  colors: isHas
+                  colors: context
+                          .watch<CacheProvider>()
+                          .moveList
+                          .contains(widget.move)
                       ? [
                           NatureConst.checkNatureWithName(widget.move.type.name)
                               .natureColor

@@ -11,6 +11,13 @@ class CacheProvider extends ChangeNotifier {
   HiveManager hiveManager = HiveManager();
 
   //Vars
+
+  bool _pookeeCacheLoading = false;
+
+  bool _moveCacheLoading = false;
+
+  bool _itemCacheLoading = false;
+
   List<Pokemon> _pookeeList = [];
 
   List<Move> _moveList = [];
@@ -48,6 +55,33 @@ class CacheProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void changePookeeCacheLoading({bool? newLoading}) {
+    if (newLoading != null) {
+      _pookeeCacheLoading = newLoading;
+    } else {
+      _pookeeCacheLoading = !_pookeeCacheLoading;
+      notifyListeners();
+    }
+  }
+
+  void changeMoveCacheLoading({bool? newLoading}) {
+    if (newLoading != null) {
+      _moveCacheLoading = newLoading;
+    } else {
+      _moveCacheLoading = !_moveCacheLoading;
+      notifyListeners();
+    }
+  }
+
+  void changeItemCacheLoading({bool? newLoading}) {
+    if (newLoading != null) {
+      _itemCacheLoading = newLoading;
+    } else {
+      _itemCacheLoading = !_itemCacheLoading;
+      notifyListeners();
+    }
+  }
+
   //Getter
 
   List<Pokemon> get pookeeList => _pookeeList;
@@ -55,4 +89,10 @@ class CacheProvider extends ChangeNotifier {
   List<Move> get moveList => _moveList;
 
   List<Item> get itemList => _itemList;
+
+  bool get pookeeCacheLoading => _pookeeCacheLoading;
+
+  bool get moveCacheLoading => _moveCacheLoading;
+
+  bool get itemCacheLoading => _itemCacheLoading;
 }

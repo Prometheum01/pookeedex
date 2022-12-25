@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:pookeedex/product/model/item.dart';
+import 'package:pookeedex/product/model/move.dart';
+import 'package:pookeedex/product/model/pokemon.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/enum/hive.dart';
@@ -10,8 +13,6 @@ import '../../../../core/services/provider/cache_provider.dart';
 import '../../../../core/services/provider/main_screen_provider.dart';
 
 abstract class IFavoriteButton<T extends StatefulWidget> extends State<T> {
-  late bool _isHas;
-
   bool isLoading = false;
 
   // ignore: avoid_shadowing_type_parameters
@@ -44,12 +45,10 @@ abstract class IFavoriteButton<T extends StatefulWidget> extends State<T> {
   Future<void> clickButton<T>(
       {required T data, required HiveEnum hiveEnum}) async {
     changeLoading();
-    if (_isHas) {
+    if (isHas<T>(data: data)) {
       await HiveManager().deleteDataFromBox<T>(data: data, hiveEnum: hiveEnum);
 
       showCustomSnackBar("Deleted from Favorite");
-
-      changeIsHas();
 
       // ignore: use_build_context_synchronously
       context.read<CacheProvider>().initializeLists();
@@ -61,8 +60,6 @@ abstract class IFavoriteButton<T extends StatefulWidget> extends State<T> {
         if (await HiveManager()
             .addDataToBox<T>(data: data, hiveEnum: hiveEnum)) {
           showCustomSnackBar("Added Favorite");
-
-          changeIsHas();
 
           context.read<CacheProvider>().initializeLists();
         }
@@ -81,19 +78,16 @@ abstract class IFavoriteButton<T extends StatefulWidget> extends State<T> {
     });
   }
 
-  checkIsHas() {}
-
-  changeIsHas() {
-    setState(() {
-      _isHas = !_isHas;
-    });
+  bool isHas<T>({required T data}) {
+    switch (T) {
+      case Pokemon:
+        return context.read<CacheProvider>().pookeeList.contains(data);
+      case Move:
+        return context.read<CacheProvider>().moveList.contains(data);
+      case Item:
+        return context.read<CacheProvider>().itemList.contains(data);
+      default:
+        return false;
+    }
   }
-
-  setIsHas(bool newIsHas) {
-    setState(() {
-      _isHas = newIsHas;
-    });
-  }
-
-  bool get isHas => _isHas;
 }

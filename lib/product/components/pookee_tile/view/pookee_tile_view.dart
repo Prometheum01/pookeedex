@@ -5,6 +5,9 @@ import 'package:pookeedex/core/extensions/string_extension.dart';
 import 'package:pookeedex/product/components/pookee_tile/view_model/pookee_tile_view_model.dart';
 import 'package:pookeedex/product/components/widgets.dart';
 import 'package:pookeedex/product/model/pokemon.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../core/services/provider/cache_provider.dart';
 
 class PookeeTile<T> extends StatefulWidget {
   const PookeeTile({
@@ -39,7 +42,10 @@ class _PookeeTileState<T> extends PookeeTileViewModel<T> {
         decoration: !widget.isFavorite
             ? BoxDecoration(
                 gradient: LinearGradient(
-                  colors: isHas
+                  colors: context
+                          .watch<CacheProvider>()
+                          .pookeeList
+                          .contains(widget.pokemon)
                       ? [
                           widget.pokemon.mainFirstColor,
                           widget.pokemon.mainSecondColor

@@ -1,5 +1,3 @@
-import 'package:permission_handler/permission_handler.dart';
-
 abstract class IPermissionManager {
   Future<void> askStoragePermission({
     required Function permanentlyDeniedFunction,

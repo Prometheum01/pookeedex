@@ -23,3 +23,4 @@ export 'package:pookeedex/product/components/cached_image.dart';
 export 'package:pookeedex/product/components/favorite_tab_button.dart';
 export 'package:pookeedex/product/components/favorite_row.dart';
 export 'package:pookeedex/product/components/animation_with_text.dart';
+export 'package:pookeedex/product/components/custom_arrow.dart';

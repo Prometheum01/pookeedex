@@ -3,24 +3,12 @@ import 'package:pookeedex/product/components/favorite_button/interface/i_favorit
 import 'package:pookeedex/product/components/widgets.dart';
 
 import '../../../../core/enum/hive.dart';
-import '../../../../core/services/cache/hive_manager.dart';
 import '../../../../core/services/navigator/navigator_service.dart';
 
 abstract class ItemTileViewModel<T> extends IFavoriteButton<ItemTileView<T>> {
   @override
   void initState() {
     super.initState();
-    checkIsHas();
-  }
-
-  @override
-  checkIsHas() {
-    setIsHas(
-      HiveManager().checkDataInBox<T>(
-        data: widget.item as T,
-        hiveEnum: HiveEnum.favorite_items,
-      ),
-    );
   }
 
   Future<void> longPress() async {

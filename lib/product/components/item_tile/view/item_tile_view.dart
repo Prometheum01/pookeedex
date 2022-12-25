@@ -3,7 +3,9 @@ import 'package:kartal/kartal.dart';
 import 'package:pookeedex/core/constants/color_const.dart';
 
 import 'package:pookeedex/product/components/item_tile/view_model/item_tile_view_model.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../core/services/provider/cache_provider.dart';
 import '../../../model/item.dart';
 import '../../widgets.dart';
 
@@ -36,7 +38,10 @@ class _ItemTileViewState<T> extends ItemTileViewModel<T> {
         decoration: !widget.isFavorite
             ? BoxDecoration(
                 gradient: LinearGradient(
-                  colors: isHas
+                  colors: context
+                          .watch<CacheProvider>()
+                          .itemList
+                          .contains(widget.item)
                       ? ColorConst.mainGradientColors
                           .map((e) => e.withOpacity(0.75))
                           .toList()

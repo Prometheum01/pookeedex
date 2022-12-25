@@ -37,9 +37,19 @@ class _SearchBarState extends State<SearchBar> {
           //Pokemon
 
           _showLoading();
-
-          Pokemon? pookee = await PookeeService().fetchPokemon(
-              searchController.text.trim().toLowerCase().toString());
+          Pokemon? pookee;
+          try {
+            pookee = await PookeeService().fetchPokemon(
+                searchController.text.trim().toLowerCase().toString());
+          } catch (_) {
+            Navigator.of(context).pop();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Somethings get wrong please try again later"),
+              ),
+            );
+            break;
+          }
 
           if (pookee == null) {
             Navigator.of(context).pop();
@@ -61,9 +71,20 @@ class _SearchBarState extends State<SearchBar> {
           //Moves
           _showLoading();
 
-          Move? move = await PookeeService().fetchMove(
-            searchController.text.trim().toJsonText,
-          );
+          Move? move;
+          try {
+            move = await PookeeService().fetchMove(
+              searchController.text.trim().toJsonText,
+            );
+          } catch (_) {
+            Navigator.of(context).pop();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Somethings get wrong please try again later"),
+              ),
+            );
+            break;
+          }
 
           if (move == null) {
             Navigator.of(context).pop();
@@ -84,9 +105,20 @@ class _SearchBarState extends State<SearchBar> {
           //Items
           _showLoading();
 
-          Item? item = await PookeeService().fetchItem(
-            searchController.text.trim().toJsonText,
-          );
+          Item? item;
+          try {
+            item = await PookeeService().fetchItem(
+              searchController.text.trim().toJsonText,
+            );
+          } catch (_) {
+            Navigator.of(context).pop();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Somethings get wrong please try again later"),
+              ),
+            );
+            break;
+          }
 
           if (item == null) {
             Navigator.of(context).pop();
@@ -164,7 +196,7 @@ class _SearchBarState extends State<SearchBar> {
                   function: () async {
                     await search();
                   }),
-              suffixIcon: _TextFieldButton(icon: Icons.mic, function: () {}),
+              //suffixIcon: _TextFieldButton(icon: Icons.mic, function: () {}),
             ),
           ),
         ),

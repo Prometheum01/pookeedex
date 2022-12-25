@@ -25,7 +25,9 @@ class _FavoriteButtonState<T> extends FavoriteButtonViewModel<T> {
       icon: isLoading
           ? const CustomLoading()
           : Icon(
-              isHas ? Icons.favorite : Icons.favorite_border,
+              isHas<T>(data: widget.data)
+                  ? Icons.favorite
+                  : Icons.favorite_border,
             ),
     );
   }
