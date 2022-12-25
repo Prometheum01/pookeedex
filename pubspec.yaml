@@ -17,14 +17,13 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-
+  
   #Tools
   kartal: ^2.3.2
   lottie: ^2.0.0
   flutter_svg: ^1.1.6
   permission_handler: ^10.2.0
   path_provider: ^2.0.11
-  flutter_gif: ^0.0.4
 
   #State Management
   provider: ^6.0.4
@@ -58,7 +57,6 @@ flutter:
   assets:
     - assets/svg/
     - assets/animation/
-    - assets/gif/
   # example:
   # fonts:
   #   - family: Schyler
