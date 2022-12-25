@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
-import 'package:pookeedex/core/enum/hive.dart';
-import 'package:pookeedex/core/services/navigator/navigator_service.dart';
 import 'package:pookeedex/product/components/move_tile/view_model/move_tile_view_model.dart';
 import 'package:pookeedex/product/components/widgets.dart';
 

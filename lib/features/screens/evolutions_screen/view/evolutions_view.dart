@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pookeedex/core/constants/asset_const.dart';
 import 'package:pookeedex/core/constants/radius_const.dart';
 import 'package:pookeedex/product/model/pokemon.dart';

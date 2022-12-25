@@ -51,10 +51,8 @@ class MainScreenProvider extends ChangeNotifier {
       _connection = result;
       notifyListeners();
 
-      print("a");
       if (result == InternetConnectionStatus.connected &&
           beforeStatus == InternetConnectionStatus.disconnected) {
-        print("b");
         await checkAndFetchInitialList();
         cacheInitialValues();
       }
@@ -62,12 +60,9 @@ class MainScreenProvider extends ChangeNotifier {
   }
 
   Future<void> checkAndFetchInitialList() async {
-    print("1");
     if (!_isLoadingMain) {
       changeLoadingMain();
-      print("2");
       if (!isInitialValuesLoaded) {
-        print("3");
         //If internet and initial values not
 
         if (initialPokemonFromHive.length >= INITIAL_LIST_LENGTH) {
@@ -124,7 +119,6 @@ class MainScreenProvider extends ChangeNotifier {
             }
           }
         }
-        print("4");
       }
 
       changeLoadingMain();

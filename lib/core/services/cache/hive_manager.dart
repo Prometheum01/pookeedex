@@ -162,8 +162,8 @@ class HiveManager extends IHaveManager {
               break;
             default:
           }
+          // ignore: unused_catch_clause
         } on PlatformException catch (error) {
-          print(error);
           return false;
         }
         box.add(data);

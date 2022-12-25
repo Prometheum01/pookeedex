@@ -22,7 +22,6 @@ class ImageDownloaderCache extends IImageDownloader {
       }
       return null;
     } catch (e) {
-      print("Image Download error");
       return null;
     }
   }

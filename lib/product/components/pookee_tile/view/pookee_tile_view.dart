@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:pookeedex/core/constants/padding_const.dart';
-import 'package:pookeedex/core/enum/hive.dart';
 import 'package:pookeedex/core/extensions/string_extension.dart';
-import 'package:pookeedex/core/services/navigator/navigator_service.dart';
-import 'package:pookeedex/core/services/provider/pookee_provider.dart';
 import 'package:pookeedex/product/components/pookee_tile/view_model/pookee_tile_view_model.dart';
 import 'package:pookeedex/product/components/widgets.dart';
 import 'package:pookeedex/product/model/pokemon.dart';
-import 'package:provider/provider.dart';
 
 class PookeeTile<T> extends StatefulWidget {
   const PookeeTile({

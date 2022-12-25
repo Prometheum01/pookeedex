@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kartal/kartal.dart';
-import 'package:pookeedex/core/constants/asset_const.dart';
 import 'package:pookeedex/core/constants/padding_const.dart';
 import 'package:pookeedex/product/components/widgets.dart';
 import 'package:pookeedex/product/constants/nature_constants.dart';
 
-import '../../../../core/enum/hive.dart';
 import '../../../../product/model/move.dart';
 import '../../../../product/model/nature.dart';
 

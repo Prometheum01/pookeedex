@@ -12,8 +12,6 @@ abstract class MainViewModel extends State<MainView> {
   void initState() {
     super.initState();
 
-    print("asd");
-
     pageController = PageController();
 
     context.read<MainScreenProvider>().setPageController(pageController);

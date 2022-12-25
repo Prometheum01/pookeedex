@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pookeedex/core/constants/asset_const.dart';
 import 'package:pookeedex/product/model/item.dart';
 import 'package:pookeedex/product/model/pokemon.dart';
