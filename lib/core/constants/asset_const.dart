@@ -30,4 +30,8 @@ class AssetConst {
   static const String rock = 'assets/svg/ic_rock.svg';
   static const String steel = 'assets/svg/ic_steel.svg';
   static const String water = 'assets/svg/ic_water.svg';
+
+  //Images
+  static const String pookeedex = 'assets/images/ic_pookeedex.png';
+  static const String fromPmx = 'assets/images/ic_from_pmx.png';
 }

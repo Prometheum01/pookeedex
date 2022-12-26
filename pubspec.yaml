@@ -57,6 +57,7 @@ flutter:
   assets:
     - assets/svg/
     - assets/animation/
+    - assets/images/
 
   fonts:
     - family: Pokemon

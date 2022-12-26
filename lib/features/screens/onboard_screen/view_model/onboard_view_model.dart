@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:kartal/kartal.dart';
 import 'package:pookeedex/core/services/navigator/navigator_service.dart';
 
+import '../../../../core/constants/asset_const.dart';
 import '../view/onboard_view.dart';
 
 abstract class OnboardViewModel extends State<OnboardView> {
@@ -11,18 +12,14 @@ abstract class OnboardViewModel extends State<OnboardView> {
   int currentPageIndex = 0;
 
   List<Widget> contentList = [
-    const Center(
-      child: Text(
-        "This application want to you give permission for storage. Because we are save favorite contents and images. If you don't want to give permission you can't use these feature.",
-        textAlign: TextAlign.center,
-      ),
+    const OnboardContentText(
+      text:
+          "This application want to you give permission for storage. Because we are save favorite contents and images. If you don't want to give permission you can't use these feature.",
     ),
-    const Center(
-      child: Text(
-        "If you want to add favorite content fastly. You can press long tile and wait :)",
-        textAlign: TextAlign.center,
-      ),
-    ),
+    const OnboardContentText(
+        text:
+            "If you want to add favorite content fastly. You can press long tile and wait :)"),
+    const OnboardContentText(text: "Thanks PokeApi.co for api."),
   ];
 
   @override
@@ -57,6 +54,19 @@ abstract class OnboardViewModel extends State<OnboardView> {
         pageController.animateToPage(currentPageIndex,
             duration: context.durationLow, curve: Curves.ease);
       });
+    }
+  }
+
+  get background {
+    switch (currentPageIndex) {
+      case 0:
+        return AssetConst.pokemon;
+      case 1:
+        return AssetConst.move;
+      case 2:
+        return AssetConst.item;
+      default:
+        return AssetConst.pokemon;
     }
   }
 }
