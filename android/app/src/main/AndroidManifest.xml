@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
    <application
-        android:label="pookeedex"
+        android:label="PookeeDex"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
