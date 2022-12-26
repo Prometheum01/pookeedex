@@ -37,9 +37,13 @@ class PookeeProvider extends ChangeNotifier {
   //0 = Stats, 1 = Evolutions, 2 = Moves
   int _selectedPage = 0;
 
-  setPookee(Pokemon newPookee) {
-    _currentPookee = newPookee;
-    notifyListeners();
+  setPookee(Pokemon? newPookee) {
+    if (newPookee == null) {
+      _currentPookee = Pokemon.emptyPokemon;
+    } else {
+      _currentPookee = newPookee;
+      notifyListeners();
+    }
   }
 
   setMovesList(List<Move>? newList) {

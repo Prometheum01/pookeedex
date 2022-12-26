@@ -70,7 +70,9 @@ class _CustomButtonState extends State<CustomButton> {
           child: Center(
             child: Text(
               widget.text,
+              textAlign: TextAlign.center,
               style: context.textTheme.headline6?.copyWith(
+                  fontSize: 18,
                   color: isSelected
                       ? Colors.white
                       : nature.natureColor.firstColor),

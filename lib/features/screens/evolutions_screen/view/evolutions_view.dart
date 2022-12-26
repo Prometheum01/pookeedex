@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:pookeedex/core/constants/asset_const.dart';
 import 'package:pookeedex/core/constants/radius_const.dart';
 import 'package:pookeedex/core/enum/hive.dart';
+import 'package:pookeedex/core/extensions/string_extension.dart';
 import 'package:pookeedex/core/services/cache/hive_manager.dart';
 import 'package:pookeedex/core/services/navigator/navigator_service.dart';
 import 'package:pookeedex/core/services/provider/pookee_provider.dart';
@@ -12,6 +15,7 @@ import 'package:provider/provider.dart';
 import '../../../../core/constants/padding_const.dart';
 import '../../../../product/components/widgets.dart';
 import '../../../../product/model/evolve.dart';
+import '../../../../product/services/network/pokemon_service.dart';
 
 class EvolutionsView extends StatelessWidget {
   const EvolutionsView({super.key, required this.pookee});
@@ -57,7 +61,7 @@ class EvolveChainy extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _imageWithText(context, evolve),
+        EvolveImageWithText(evolve: evolve),
         Flexible(
           child: Column(
             children: [
@@ -96,27 +100,92 @@ class EvolveChainy extends StatelessWidget {
             ],
           ),
         ),
-        _imageWithText(context, evolve.evolvesTo!),
+        EvolveImageWithText(evolve: evolve.evolvesTo!),
       ],
     );
   }
+}
 
-  Pokemon? searchPookee(Evolve evolve) {
+class EvolveImageWithText extends StatefulWidget {
+  const EvolveImageWithText({super.key, required this.evolve});
+
+  final Evolve evolve;
+
+  @override
+  State<EvolveImageWithText> createState() => _EvolveImageWithTextState();
+}
+
+class _EvolveImageWithTextState extends State<EvolveImageWithText> {
+  bool isLoading = false;
+
+  changeLoading() {
+    setState(() {
+      isLoading = !isLoading;
+    });
+  }
+
+  Future<dynamic> _showLoading(BuildContext context) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return const Center(
+          child: CustomLoading(),
+        );
+      },
+    );
+  }
+
+  Pokemon? findPokemonInCache() {
     for (Pokemon tmp in HiveManager()
         .readDataFromBox<Pokemon>(HiveEnum.favorite_pokemon)
         .values
         .toList()) {
-      if (tmp.name == evolve.name) {
+      if (tmp.name == widget.evolve.name) {
         return tmp;
       }
     }
     return null;
   }
 
-  Widget _imageWithText(BuildContext context, Evolve evolve) {
+  Future<Pokemon?> searchPookee() async {
+    changeLoading();
+    _showLoading(context);
+
+    for (Pokemon tmp in HiveManager()
+        .readDataFromBox<Pokemon>(HiveEnum.favorite_pokemon)
+        .values
+        .toList()) {
+      if (tmp.name == widget.evolve.name) {
+        changeLoading();
+        Navigator.of(context).pop();
+        return tmp;
+      }
+    }
+
+    Pokemon? pookee;
+
+    try {
+      pookee ??=
+          await PookeeService().fetchPokemon(widget.evolve.name.toJsonText);
+    } catch (_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Somethings get wrong please try again later"),
+        ),
+      );
+    }
+    Navigator.of(context).pop();
+    changeLoading();
+
+    return pookee;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Pokemon? tmpPookee = searchPookee(evolve);
+      onTap: () async {
+        Pokemon? tmpPookee = await searchPookee();
         if (tmpPookee != null) {
           if (context.read<PookeeProvider>().pookee != tmpPookee) {
             context.read<PookeeProvider>().setPookee(tmpPookee);
@@ -130,21 +199,21 @@ class EvolveChainy extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            searchPookee(evolve) != null
+            findPokemonInCache() != null
                 ? CachedPokemonImage(
-                    pookee: searchPookee(evolve)!,
+                    pookee: findPokemonInCache()!,
                   )
                 : Image.network(
-                    evolve.image,
+                    widget.evolve.image,
                     errorBuilder: (context, error, stackTrace) {
                       return const Text(
-                        "This pokemon is not in the cache",
+                        "This pokemon is not in the cache\n",
                         textAlign: TextAlign.center,
                       );
                     },
                   ),
             Text(
-              evolve.name.toTitleCase(),
+              widget.evolve.name.toTitleCase(),
             ),
           ],
         ),

@@ -57,8 +57,8 @@ flutter:
   assets:
     - assets/svg/
     - assets/animation/
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+
+  fonts:
+    - family: Pokemon
+      fonts:
+        - asset: assets/fonts/pokemon_solid.ttf

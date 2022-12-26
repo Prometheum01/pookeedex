@@ -21,9 +21,15 @@ abstract class DetailViewModel extends State<DetailView> {
   }
 
   @override
+  void deactivate() {
+    context.read<PookeeProvider>().setPookee(null);
+    super.deactivate();
+  }
+
+  @override
   void dispose() {
-    pageController.dispose();
     super.dispose();
+    pageController.dispose();
   }
 
   Future<void> initPage() async {

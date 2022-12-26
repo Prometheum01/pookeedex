@@ -96,26 +96,35 @@ class _DetailViewState extends DetailViewModel {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        CustomButton(
-          text: "STATS",
-          id: 0,
-          function: () {
-            changePage(0);
-          },
+        Flexible(
+          flex: 5,
+          child: CustomButton(
+            text: "STATS",
+            id: 0,
+            function: () {
+              changePage(0);
+            },
+          ),
         ),
-        CustomButton(
-          text: "EVOLUTIONS",
-          id: 1,
-          function: () {
-            changePage(1);
-          },
+        Flexible(
+          flex: 7,
+          child: CustomButton(
+            text: "EVOLUTIONS",
+            id: 1,
+            function: () {
+              changePage(1);
+            },
+          ),
         ),
-        CustomButton(
-          text: "MOVES",
-          id: 2,
-          function: () {
-            changePage(2);
-          },
+        Flexible(
+          flex: 5,
+          child: CustomButton(
+            text: "MOVES",
+            id: 2,
+            function: () {
+              changePage(2);
+            },
+          ),
         ),
       ],
     );
