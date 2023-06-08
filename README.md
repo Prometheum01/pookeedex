@@ -28,6 +28,8 @@ An app for showing info about pokemons, their moves, and the items in the univer
 
 - [iOS Pokedex App](https://www.uplabs.com/posts/ios-pokedex-app)
 
+- Video: https://youtube.com/shorts/fVSLmtc2PCc?feature=share
+
 ## Screenshots
 
 ![Loading Page](https://github.com/Prometheum01/pookeedex/blob/master/screenshots/loading.png)
